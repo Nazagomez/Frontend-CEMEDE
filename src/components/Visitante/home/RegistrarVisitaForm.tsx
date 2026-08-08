@@ -1,0 +1,89 @@
+import { useState, type FormEvent } from 'react'
+import { MapPin, Users } from 'lucide-react'
+import type { PlayaVisitante } from '@/types/Visitante/home'
+
+const playas: PlayaVisitante[] = [
+  { id: 1, nombre: 'Playa Grande, Santa Cruz', ubicacion: 'Santa Cruz, Guanacaste' },
+  { id: 2, nombre: 'Playa Junquillal, La Cruz', ubicacion: 'La Cruz, Guanacaste' },
+]
+
+export function RegistrarVisitaForm() {
+  const [playaId, setPlayaId] = useState<number>(playas[1].id)
+  const [personas, setPersonas] = useState(1)
+  const [tiempo, setTiempo] = useState('')
+  const [enviado, setEnviado] = useState(false)
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault()
+    // TODO: conectar a POST /api/visitantes/entrada cuando el backend tenga endpoint público
+    setEnviado(true)
+  }
+
+  return (
+    <div className="rounded-xl border border-gray-200 bg-white p-6">
+      <div className="flex items-center gap-1.5 text-navy-900">
+        <MapPin className="h-4 w-4" aria-hidden />
+        <h2 className="font-semibold">Registrar Visita</h2>
+      </div>
+      <p className="mt-1 text-xs text-ink-500">Registrá tu visita para ayudarnos a monitorear la ocupación.</p>
+
+      <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
+        <div>
+          <label className="text-sm font-medium text-ink-700">Selecciona una playa</label>
+          <div className="mt-1.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {playas.map((playa) => (
+              <button
+                key={playa.id}
+                type="button"
+                onClick={() => setPlayaId(playa.id)}
+                className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
+                  playaId === playa.id ? 'border-navy-700 bg-navy-900 text-white' : 'border-gray-300 text-ink-700 hover:bg-gray-50'
+                }`}
+              >
+                {playa.nombre}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="personas" className="text-sm font-medium text-ink-700">Número de personas</label>
+          <div className="relative mt-1.5">
+            <Users className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500" aria-hidden />
+            <input
+              id="personas"
+              type="number"
+              min={1}
+              value={personas}
+              onChange={(e) => setPersonas(Number(e.target.value))}
+              className="w-full rounded-lg border border-gray-300 py-2 pl-9 pr-3 text-sm outline-none focus:border-navy-700"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="tiempo" className="text-sm font-medium text-ink-700">Tiempo estimado de permanencia (opcional)</label>
+          <input
+            id="tiempo"
+            type="text"
+            placeholder="Ej: 2 horas"
+            value={tiempo}
+            onChange={(e) => setTiempo(e.target.value)}
+            className="mt-1.5 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-navy-700"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="mt-1 rounded-lg bg-navy-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navy-800"
+        >
+          Registrar visita
+        </button>
+
+        {enviado && (
+          <p className="text-xs text-ink-500">(Demo) Todavía no hay endpoint público en el backend para guardar esto de verdad.</p>
+        )}
+      </form>
+    </div>
+  )
+}
