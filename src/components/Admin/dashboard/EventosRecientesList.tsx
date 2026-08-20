@@ -1,5 +1,5 @@
-import type { EventoAmbiental } from '@/types/Admin/eventos'
-import { TIPO_EVENTO_LABEL } from '@/types/Admin/eventos'
+import type { EventoAmbiental } from '@/types/admin/eventos'
+import { TIPO_EVENTO_LABEL } from '@/types/admin/eventos'
 
 interface EventosRecientesListProps {
   eventos: EventoAmbiental[]

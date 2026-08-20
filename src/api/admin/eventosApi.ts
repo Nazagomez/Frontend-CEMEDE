@@ -1,5 +1,5 @@
 import { httpClient } from '@/api/httpClient'
-import type { EventoAmbientalRaw, EventosFiltro, CrearEventoPayload } from '@/types/Admin/eventos'
+import type { EventoAmbientalRaw, EventosFiltro, CrearEventoPayload } from '@/types/admin/eventos'
 
 export async function fetchEventos(filtro?: EventosFiltro): Promise<EventoAmbientalRaw[]> {
   const { data } = await httpClient.get<EventoAmbientalRaw[]>('/eventos', {
@@ -7,8 +7,15 @@ export async function fetchEventos(filtro?: EventosFiltro): Promise<EventoAmbien
       playa_id: filtro?.playaId,
       tipo: filtro?.tipo,
       activo: filtro?.activo,
+      estado: filtro?.estado,
     },
   })
+  return data
+}
+
+/** Endpoint dedicado, solo admin — más directo que filtrar por estado en /eventos. */
+export async function fetchEventosPendientes(): Promise<EventoAmbientalRaw[]> {
+  const { data } = await httpClient.get<EventoAmbientalRaw[]>('/eventos/pendientes')
   return data
 }
 
@@ -22,6 +29,16 @@ export async function crearEvento(payload: CrearEventoPayload): Promise<EventoAm
     parte_afectada: payload.parteAfectada,
     totalidad_analizada: payload.totalidadAnalizada,
   })
+  return data
+}
+
+export async function aprobarEvento(eventoId: number): Promise<EventoAmbientalRaw> {
+  const { data } = await httpClient.put<EventoAmbientalRaw>(`/eventos/${eventoId}/aprobar`)
+  return data
+}
+
+export async function rechazarEvento(eventoId: number): Promise<EventoAmbientalRaw> {
+  const { data } = await httpClient.put<EventoAmbientalRaw>(`/eventos/${eventoId}/rechazar`)
   return data
 }
 

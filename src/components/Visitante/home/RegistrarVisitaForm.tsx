@@ -1,22 +1,24 @@
 import { useState, type FormEvent } from 'react'
 import { MapPin, Users } from 'lucide-react'
-import type { PlayaVisitante } from '@/types/Visitante/home'
+import type { Playa } from '@/types/playas'
+import type { RegistrarVisitaPayload } from '@/types/visitante/home'
 
-const playas: PlayaVisitante[] = [
-  { id: 1, nombre: 'Playa Grande, Santa Cruz', ubicacion: 'Santa Cruz, Guanacaste' },
-  { id: 2, nombre: 'Playa Junquillal, La Cruz', ubicacion: 'La Cruz, Guanacaste' },
-]
+interface RegistrarVisitaFormProps {
+  playas: Playa[]
+  enviando: boolean
+  enviado: boolean
+  onSubmit: (payload: RegistrarVisitaPayload) => void
+}
 
-export function RegistrarVisitaForm() {
-  const [playaId, setPlayaId] = useState<number>(playas[1].id)
+export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit }: RegistrarVisitaFormProps) {
+  const [playaId, setPlayaId] = useState<number | null>(playas[0]?.id ?? null)
   const [personas, setPersonas] = useState(1)
   const [tiempo, setTiempo] = useState('')
-  const [enviado, setEnviado] = useState(false)
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    // TODO: conectar a POST /api/visitantes/entrada cuando el backend tenga endpoint público
-    setEnviado(true)
+    if (playaId === null) return
+    onSubmit({ playaId, cantidadPersonas: personas, tiempoEstimado: tiempo || undefined })
   }
 
   return (
@@ -75,9 +77,10 @@ export function RegistrarVisitaForm() {
 
         <button
           type="submit"
-          className="mt-1 rounded-lg bg-navy-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navy-800"
+          disabled={enviando || playaId === null}
+          className="mt-1 rounded-lg bg-navy-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navy-800 disabled:opacity-50"
         >
-          Registrar visita
+          {enviando ? 'Enviando…' : 'Registrar visita'}
         </button>
 
         {enviado && (

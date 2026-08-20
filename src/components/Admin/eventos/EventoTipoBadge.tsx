@@ -1,4 +1,4 @@
-import { TIPO_EVENTO_LABEL, type TipoEvento } from '@/types/Admin/eventos'
+import { TIPO_EVENTO_LABEL, type TipoEvento } from '@/types/admin/eventos'
 
 export function EventoTipoBadge({ tipo }: { tipo: TipoEvento }) {
   return (

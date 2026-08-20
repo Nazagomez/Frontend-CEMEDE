@@ -17,6 +17,17 @@ export const TIPO_EVENTO_LABEL: Record<TipoEvento, string> = {
   otro: 'Otro',
 }
 
+export type EstadoEvento = 'pendiente' | 'aprobado' | 'rechazado' | 'cerrado'
+
+export const ESTADO_EVENTO_LABEL: Record<EstadoEvento, string> = {
+  pendiente: 'Pendiente',
+  aprobado: 'Aprobado',
+  rechazado: 'Rechazado',
+  cerrado: 'Cerrado',
+}
+
+export type OrigenEvento = 'visitante' | 'investigador' | 'administrador'
+
 export interface EventoAmbientalRaw {
   id: number
   playa_id: number
@@ -26,9 +37,12 @@ export interface EventoAmbientalRaw {
   descripcion: string | null
   fecha_inicio: string
   fecha_fin: string | null
-  factor_correccion: number
+  factor_correccion: number | null
   activo: boolean
-  mensaje: string | null
+  estado: EstadoEvento
+  origen: OrigenEvento
+  reportado_por: string | null
+  mensaje?: string | null
 }
 
 export interface EventoAmbiental {
@@ -40,14 +54,18 @@ export interface EventoAmbiental {
   descripcion: string | null
   fechaInicio: string
   fechaFin: string | null
-  factorCorreccion: number
+  factorCorreccion: number | null
   activo: boolean
+  estado: EstadoEvento
+  origen: OrigenEvento
+  reportadoPor: string | null
 }
 
 export interface EventosFiltro {
   playaId?: number
   tipo?: TipoEvento
   activo?: boolean
+  estado?: EstadoEvento
 }
 
 export interface CrearEventoPayload {

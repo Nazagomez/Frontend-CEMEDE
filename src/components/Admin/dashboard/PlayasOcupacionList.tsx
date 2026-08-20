@@ -1,4 +1,4 @@
-import type { PlayaResumenDashboard, EstadoOcupacion } from '@/types/Admin/dashboard'
+import type { PlayaResumenDashboard, EstadoOcupacion } from '@/types/admin/dashboard'
 
 interface PlayasOcupacionListProps {
   playas: PlayaResumenDashboard[]

@@ -1,25 +1,24 @@
 import { Link } from 'react-router-dom'
 import { MapPin } from 'lucide-react'
-import type { OcupacionPlaya } from '@/types/Visitante/home'
+import type { OcupacionPlaya, NivelOcupacion } from '@/types/visitante/home'
 
-const ocupacion: OcupacionPlaya[] = [
-  { playaId: 1, nombre: 'Playa Grande, Santa Cruz', ubicacion: '', nivel: 'baja', actualizadoHace: 'hace 5min' },
-  { playaId: 2, nombre: 'Playa Junquillal, La Cruz', ubicacion: '', nivel: 'alta', actualizadoHace: 'hace 5min' },
-]
+interface OcupacionActualCardProps {
+  ocupacion: OcupacionPlaya[]
+}
 
-const nivelStyles: Record<OcupacionPlaya['nivel'], string> = {
+const nivelStyles: Record<NivelOcupacion, string> = {
   baja: 'bg-green-100 text-green-700',
   media: 'bg-yellow-100 text-yellow-700',
   alta: 'bg-alert-600/10 text-alert-600',
 }
 
-const nivelLabel: Record<OcupacionPlaya['nivel'], string> = {
+const nivelLabel: Record<NivelOcupacion, string> = {
   baja: 'Baja',
   media: 'Media',
   alta: 'Alta',
 }
 
-export function OcupacionActualCard() {
+export function OcupacionActualCard({ ocupacion }: OcupacionActualCardProps) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-6">
       <div className="flex items-center gap-1.5 text-navy-900">
