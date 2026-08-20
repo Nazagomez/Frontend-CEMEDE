@@ -1,5 +1,5 @@
 import { httpClient } from '@/api/httpClient'
-import type { EventoAmbientalRaw, EventosFiltro, CrearEventoPayload } from '@/types/admin/eventos'
+import type { EventoAmbientalRaw, EventosFiltro, CrearEventoPayload } from '@/types/Admin/eventos'
 
 export async function fetchEventos(filtro?: EventosFiltro): Promise<EventoAmbientalRaw[]> {
   const { data } = await httpClient.get<EventoAmbientalRaw[]>('/eventos', {
