@@ -1,5 +1,5 @@
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend } from 'recharts'
-import type { PuntoTendencia } from '@/types/Admin/dashboard'
+import type { PuntoTendencia } from '@/types/admin/dashboard'
 
 interface TendenciaChartProps {
   tendencia: PuntoTendencia[]

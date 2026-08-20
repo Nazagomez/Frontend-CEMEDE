@@ -1,5 +1,5 @@
 import { httpClient } from '@/api/httpClient'
-import type { DashboardGeneralRaw, DashboardPlayaRaw, TendenciaRaw } from '@/types/Admin/dashboard'
+import type { DashboardGeneralRaw, DashboardPlayaRaw, TendenciaRaw } from '@/types/admin/dashboard'
 
 export async function fetchDashboardGeneral(): Promise<DashboardGeneralRaw> {
   const { data } = await httpClient.get<DashboardGeneralRaw>('/dashboard')

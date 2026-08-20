@@ -10,6 +10,7 @@ import { Eventos as VisitanteEventos } from '@/pages/Visitante/Eventos'
 import { AdminLayout } from '@/components/layout/admin/AdminLayout'
 import { Dashboard } from '@/pages/Admin/Dashboard'
 import { Eventos } from '@/pages/Admin/Eventos'
+import { Playas } from '@/pages/Admin/Playas'
 
 export function AppRoutes() {
   return (
@@ -29,6 +30,7 @@ export function AppRoutes() {
           <Route element={<AdminLayout />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/eventos" element={<Eventos />} />
+            <Route path="/admin/playas" element={<Playas />} />
           </Route>
         </Route>
       </Routes>

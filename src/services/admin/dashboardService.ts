@@ -1,5 +1,5 @@
 import { fetchDashboardGeneral, fetchDashboardPlaya } from '@/api/admin/dashboardApi'
-import type { DashboardGeneral, PuntoTendencia } from '@/types/Admin/dashboard'
+import type { DashboardGeneral, PuntoTendencia } from '@/types/admin/dashboard'
 
 // TODO: cuando el backend tenga GET /dashboard/tendencia, borrar esta función
 // y las llamadas a fetchDashboardPlaya() de abajo — reemplazar por una sola

@@ -1,5 +1,5 @@
 import { MapPin, Users, Activity, FileWarning } from 'lucide-react'
-import type { DashboardGeneral } from '@/types/Admin/dashboard'
+import type { DashboardGeneral } from '@/types/admin/dashboard'
 
 interface DashboardKpisProps {
   data: DashboardGeneral

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getDashboardGeneral } from '@/services/admin/dashboardService'
 import { getEventosRecientes } from '@/services/admin/eventosService'
-import type { DashboardGeneral } from '@/types/Admin/dashboard'
-import type { EventoAmbiental } from '@/types/Admin/eventos'
+import type { DashboardGeneral } from '@/types/admin/dashboard'
+import type { EventoAmbiental } from '@/types/admin/eventos'
 
 interface UseDashboardResult {
   data: DashboardGeneral | null
