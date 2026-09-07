@@ -10,5 +10,5 @@ export interface OcupacionPlaya {
 export interface RegistrarVisitaPayload {
   playaId: number
   cantidadPersonas: number
-  tiempoEstimado?: string
+  duracionEstimadaHoras?: number
 }

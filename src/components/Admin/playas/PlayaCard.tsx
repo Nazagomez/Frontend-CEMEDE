@@ -3,6 +3,7 @@ import type { PlayaConConfiguracion } from '@/types/admin/playas'
 
 interface PlayaCardProps {
   playa: PlayaConConfiguracion
+  puedeEditar: boolean
   onEditarConfiguracion: () => void
   onDarDeBaja: () => void
 }
@@ -11,7 +12,7 @@ const rowClass = 'flex items-center justify-between text-sm'
 const labelClass = 'text-ink-500'
 const valueClass = 'font-medium text-navy-900'
 
-export function PlayaCard({ playa, onEditarConfiguracion, onDarDeBaja }: PlayaCardProps) {
+export function PlayaCard({ playa, puedeEditar, onEditarConfiguracion, onDarDeBaja }: PlayaCardProps) {
   return (
     <div className="rounded-xl border border-gray-200 bg-white p-5">
       <div className="flex items-start justify-between">
@@ -28,22 +29,24 @@ export function PlayaCard({ playa, onEditarConfiguracion, onDarDeBaja }: PlayaCa
             </span>
           </div>
         </div>
-        <div className="flex items-center gap-1">
-          <button
-            onClick={onEditarConfiguracion}
-            className="flex items-center gap-1 rounded-md border border-gray-300 px-2.5 py-1.5 text-xs font-medium text-ink-700 hover:bg-gray-50"
-          >
-            <Pencil className="h-3 w-3" aria-hidden />
-            Editar
-          </button>
-          <button
-            onClick={onDarDeBaja}
-            aria-label="Dar de baja"
-            className="rounded-md border border-alert-600/30 p-1.5 text-alert-600 hover:bg-alert-600/5"
-          >
-            <Trash2 className="h-3 w-3" aria-hidden />
-          </button>
-        </div>
+        {puedeEditar && (
+          <div className="flex items-center gap-1">
+            <button
+              onClick={onEditarConfiguracion}
+              className="flex items-center gap-1 rounded-md border border-gray-300 px-2.5 py-1.5 text-xs font-medium text-ink-700 hover:bg-gray-50"
+            >
+              <Pencil className="h-3 w-3" aria-hidden />
+              Editar
+            </button>
+            <button
+              onClick={onDarDeBaja}
+              aria-label="Dar de baja"
+              className="rounded-md border border-alert-600/30 p-1.5 text-alert-600 hover:bg-alert-600/5"
+            >
+              <Trash2 className="h-3 w-3" aria-hidden />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="mt-4 flex flex-col gap-2 border-t border-gray-100 pt-3">

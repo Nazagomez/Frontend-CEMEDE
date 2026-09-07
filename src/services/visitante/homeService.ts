@@ -1,23 +1,25 @@
 import { getPlayas } from '@/services/playasService'
+import { registrarVisitaPublica } from '@/services/visitantesService'
 import type { Playa } from '@/types/playas'
-import type { OcupacionPlaya, RegistrarVisitaPayload } from '@/types/visitante/home'
+import type { OcupacionPlaya, RegistrarVisitaPayload } from '@/types/Visitante/home'
 
 export async function getPlayasDisponibles(): Promise<Playa[]> {
   return getPlayas()
 }
 
-/**
- * TODO: no hay endpoint público para registrar una visita —
- * POST /api/visitantes/entrada exige login. Reemplazar cuando exista.
- */
-export async function registrarVisita(_payload: RegistrarVisitaPayload): Promise<{ ok: boolean }> {
-  await new Promise((resolve) => setTimeout(resolve, 400))
+/** Conectado a POST /api/visitantes/entrada. Si se indica duración estimada, el registro se cierra solo. */
+export async function registrarVisita(payload: RegistrarVisitaPayload): Promise<{ ok: boolean }> {
+  await registrarVisitaPublica({
+    playaId: payload.playaId,
+    cantidadPersonas: payload.cantidadPersonas,
+    duracionEstimadaHoras: payload.duracionEstimadaHoras,
+  })
   return { ok: true }
 }
 
 /**
- * TODO: no hay endpoint público de ocupación en vivo. Placeholder
- * hasta que exista una versión pública.
+ * TODO: no hay endpoint público de ocupación en vivo — GET /visitantes/activos/{id}
+ * exige login. Placeholder hasta que se decida exponer una versión pública.
  */
 export async function getOcupacionActual(playas: Playa[]): Promise<OcupacionPlaya[]> {
   return playas.map((playa, i) => ({
