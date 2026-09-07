@@ -11,6 +11,8 @@ import { AdminLayout } from '@/components/layout/admin/AdminLayout'
 import { Dashboard } from '@/pages/Admin/Dashboard'
 import { Eventos } from '@/pages/Admin/Eventos'
 import { Playas } from '@/pages/Admin/Playas'
+import { Visitantes } from '@/pages/Admin/Visitantes'
+import { Notificaciones } from '@/pages/Admin/Notificaciones'
 
 export function AppRoutes() {
   return (
@@ -31,6 +33,8 @@ export function AppRoutes() {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/eventos" element={<Eventos />} />
             <Route path="/admin/playas" element={<Playas />} />
+            <Route path="/admin/visitantes" element={<Visitantes />} />
+            <Route path="/admin/notificaciones" element={<Notificaciones />} />
           </Route>
         </Route>
       </Routes>

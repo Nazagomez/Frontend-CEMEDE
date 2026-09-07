@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Plus } from 'lucide-react'
+import { useAuth } from '@/hooks/useAuth'
+import { puedeGestionarPlayas } from '@/services/auth/permissions'
 import { usePlayas } from '@/hooks/admin/usePlayas'
 import { PlayaCard } from '@/components/Admin/playas/PlayaCard'
 import { CrearPlayaModal } from '@/components/Admin/playas/CrearPlayaModal'
@@ -7,6 +9,9 @@ import { EditarConfiguracionModal } from '@/components/Admin/playas/EditarConfig
 import type { PlayaConConfiguracion } from '@/types/admin/playas'
 
 export function Playas() {
+  const { user } = useAuth()
+  const puedeEditar = user ? puedeGestionarPlayas(user.rol) : false
+
   const { playas, isLoading, error, actionError, crear, actualizarConfiguracion, eliminar } = usePlayas()
   const [mostrarCrear, setMostrarCrear] = useState(false)
   const [playaEditando, setPlayaEditando] = useState<PlayaConConfiguracion | null>(null)
@@ -41,21 +46,35 @@ export function Playas() {
             Datos básicos de las playas definidas en la propuesta. Esta información alimenta la estimación de capacidad de carga.
           </p>
         </div>
-        <button
-          onClick={() => setMostrarCrear(true)}
-          className="flex items-center gap-1.5 rounded-md bg-navy-900 px-4 py-2 text-sm font-medium text-white hover:bg-navy-800"
-        >
-          <Plus className="h-4 w-4" aria-hidden />
-          Agregar Playa
-        </button>
+        {puedeEditar && (
+          <button
+            onClick={() => setMostrarCrear(true)}
+            className="flex items-center gap-1.5 rounded-md bg-navy-900 px-4 py-2 text-sm font-medium text-white hover:bg-navy-800"
+          >
+            <Plus className="h-4 w-4" aria-hidden />
+            Agregar Playa
+          </button>
+        )}
       </div>
+
+      {!puedeEditar && (
+        <p className="rounded-md bg-navy-900/5 px-3 py-2 text-sm text-ink-700">
+          Tu rol tiene acceso de solo lectura a esta sección.
+        </p>
+      )}
 
       {isLoading && <p className="text-sm text-ink-500">Cargando playas…</p>}
       {error && <p className="text-sm text-alert-600">{error}</p>}
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {playas.map((playa) => (
-          <PlayaCard key={playa.id} playa={playa} onEditarConfiguracion={() => setPlayaEditando(playa)} onDarDeBaja={() => handleDarDeBaja(playa.id, playa.nombre)} />
+          <PlayaCard
+            key={playa.id}
+            playa={playa}
+            puedeEditar={puedeEditar}
+            onEditarConfiguracion={() => setPlayaEditando(playa)}
+            onDarDeBaja={() => handleDarDeBaja(playa.id, playa.nombre)}
+          />
         ))}
       </div>
 

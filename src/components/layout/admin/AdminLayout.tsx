@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { Waves, LayoutDashboard, Users, FileWarning, TrendingUp, MapPin, Bell, LogOut, Menu, X } from 'lucide-react'
+import { Waves, LayoutDashboard, Users, FileWarning, TrendingUp, MapPin, LogOut, Menu, X } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
+import { ROL_LABEL } from '@/services/auth/permissions'
+import { NotificacionesDropdown } from '@/components/Admin/notificaciones/NotificacionesDropdown'
 
 const navItems = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -9,7 +11,6 @@ const navItems = [
   { to: '/admin/eventos', label: 'Eventos ambientales', icon: FileWarning },
   { to: '/admin/capacidad', label: 'Capacidad de Carga', icon: TrendingUp },
   { to: '/admin/playas', label: 'Playas monitoreadas', icon: MapPin },
-  { to: '/admin/notificaciones', label: 'Notificaciones', icon: Bell },
 ]
 
 const navItemClass = ({ isActive }: { isActive: boolean }) =>
@@ -44,7 +45,7 @@ export function AdminLayout() {
 
       <div className="mt-4 border-t border-white/10 pt-4">
         <p className="truncate px-2 text-sm font-medium text-white">{user?.nombre}</p>
-        <p className="px-2 text-xs capitalize text-white/50">{user?.rol}</p>
+        <p className="px-2 text-xs text-white/50">{user ? ROL_LABEL[user.rol] : ''}</p>
         <button
           onClick={logout}
           className="mt-2 flex w-full items-center gap-2 rounded-md px-2 py-2 text-sm text-white/70 hover:bg-white/5 hover:text-white"
@@ -63,9 +64,12 @@ export function AdminLayout() {
           <Waves className="h-5 w-5 text-white" strokeWidth={2.25} aria-hidden />
           <span className="text-sm font-semibold text-white">SITEC</span>
         </div>
-        <button className="text-white" onClick={() => setMenuOpen((v) => !v)} aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}>
-          {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center gap-1">
+          <NotificacionesDropdown />
+          <button className="text-white" onClick={() => setMenuOpen((v) => !v)} aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}>
+            {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {menuOpen && (
@@ -81,9 +85,14 @@ export function AdminLayout() {
         {sidebarContent}
       </aside>
 
-      <main className="flex-1 bg-gray-50 px-4 py-6 sm:px-8 sm:py-8">
-        <Outlet />
-      </main>
+      <div className="flex flex-1 flex-col">
+        <header className="hidden items-center justify-end border-b border-gray-200 bg-white px-4 py-3 sm:px-8 md:flex">
+          <NotificacionesDropdown />
+        </header>
+        <main className="flex-1 bg-gray-50 px-4 py-6 sm:px-8 sm:py-8">
+          <Outlet />
+        </main>
+      </div>
     </div>
   )
 }

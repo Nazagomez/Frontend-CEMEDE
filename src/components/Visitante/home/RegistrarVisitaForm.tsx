@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { MapPin, Users } from 'lucide-react'
 import type { Playa } from '@/types/playas'
-import type { RegistrarVisitaPayload } from '@/types/visitante/home'
+import type { RegistrarVisitaPayload } from '@/types/Visitante/home'
 
 interface RegistrarVisitaFormProps {
   playas: Playa[]
@@ -10,15 +10,29 @@ interface RegistrarVisitaFormProps {
   onSubmit: (payload: RegistrarVisitaPayload) => void
 }
 
+const DURACION_OPCIONES = [
+  { value: '', label: 'No estoy seguro' },
+  { value: '1', label: '1 hora' },
+  { value: '2', label: '2 horas' },
+  { value: '3', label: '3 horas' },
+  { value: '4', label: '4 horas' },
+  { value: '6', label: '6 horas' },
+  { value: '8', label: 'Todo el día (8 horas)' },
+]
+
 export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit }: RegistrarVisitaFormProps) {
   const [playaId, setPlayaId] = useState<number | null>(playas[0]?.id ?? null)
   const [personas, setPersonas] = useState(1)
-  const [tiempo, setTiempo] = useState('')
+  const [duracion, setDuracion] = useState('')
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (playaId === null) return
-    onSubmit({ playaId, cantidadPersonas: personas, tiempoEstimado: tiempo || undefined })
+    onSubmit({
+      playaId,
+      cantidadPersonas: personas,
+      duracionEstimadaHoras: duracion ? Number(duracion) : undefined,
+    })
   }
 
   return (
@@ -64,15 +78,18 @@ export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit }: Reg
         </div>
 
         <div>
-          <label htmlFor="tiempo" className="text-sm font-medium text-ink-700">Tiempo estimado de permanencia (opcional)</label>
-          <input
-            id="tiempo"
-            type="text"
-            placeholder="Ej: 2 horas"
-            value={tiempo}
-            onChange={(e) => setTiempo(e.target.value)}
+          <label htmlFor="duracion" className="text-sm font-medium text-ink-700">¿Cuánto tiempo aproximado vas a estar?</label>
+          <select
+            id="duracion"
+            value={duracion}
+            onChange={(e) => setDuracion(e.target.value)}
             className="mt-1.5 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-navy-700"
-          />
+          >
+            {DURACION_OPCIONES.map((opcion) => (
+              <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
+            ))}
+          </select>
+          <p className="mt-1 text-xs text-ink-500">Tu registro se cerrará automáticamente pasado ese tiempo.</p>
         </div>
 
         <button
@@ -84,7 +101,7 @@ export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit }: Reg
         </button>
 
         {enviado && (
-          <p className="text-xs text-ink-500">(Demo) Todavía no hay endpoint público en el backend para guardar esto de verdad.</p>
+          <p className="text-xs text-ink-500">¡Visita registrada! Gracias por ayudarnos a monitorear la ocupación.</p>
         )}
       </form>
     </div>
