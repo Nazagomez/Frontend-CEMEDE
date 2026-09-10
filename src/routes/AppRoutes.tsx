@@ -4,8 +4,7 @@ import { LandingPage } from '@/pages/LandingPage'
 import { Login } from '@/pages/Login'
 import { VisitanteLayout } from '@/components/layout/visitante/VisitanteLayout'
 import { Home as VisitanteHome } from '@/pages/Visitante/Home'
-import { Ocupacion } from '@/pages/Visitante/Ocupacion'
-import { Capacidad } from '@/pages/Visitante/Capacidad'
+import { Capacidad as CapacidadVisitante } from '@/pages/Visitante/Capacidad'
 import { Eventos as VisitanteEventos } from '@/pages/Visitante/Eventos'
 import { AdminLayout } from '@/components/layout/admin/AdminLayout'
 import { Dashboard } from '@/pages/Admin/Dashboard'
@@ -13,6 +12,7 @@ import { Eventos } from '@/pages/Admin/Eventos'
 import { Playas } from '@/pages/Admin/Playas'
 import { Visitantes } from '@/pages/Admin/Visitantes'
 import { Notificaciones } from '@/pages/Admin/Notificaciones'
+import { Capacidad } from '@/pages/Admin/Capacidad'
 
 export function AppRoutes() {
   return (
@@ -23,8 +23,7 @@ export function AppRoutes() {
 
         <Route element={<VisitanteLayout />}>
           <Route path="/visitante" element={<VisitanteHome />} />
-          <Route path="/visitante/ocupacion" element={<Ocupacion />} />
-          <Route path="/visitante/capacidad" element={<Capacidad />} />
+          <Route path="/visitante/capacidad" element={<CapacidadVisitante />} />
           <Route path="/visitante/eventos" element={<VisitanteEventos />} />
         </Route>
 
@@ -35,6 +34,7 @@ export function AppRoutes() {
             <Route path="/admin/playas" element={<Playas />} />
             <Route path="/admin/visitantes" element={<Visitantes />} />
             <Route path="/admin/notificaciones" element={<Notificaciones />} />
+            <Route path="/admin/capacidad" element={<Capacidad />} />
           </Route>
         </Route>
       </Routes>
