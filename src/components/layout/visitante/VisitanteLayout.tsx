@@ -4,8 +4,7 @@ import { Waves, Home, Activity, TrendingUp, FileWarning, LogOut, Menu, X } from 
 
 const navLinks = [
   { to: '/visitante', label: 'Inicio', icon: Home, end: true },
-  { to: '/visitante/ocupacion', label: 'Ocupación', icon: Activity, end: false },
-  { to: '/visitante/capacidad', label: 'Capacidad de carga', icon: TrendingUp, end: false },
+  { to: '/visitante/capacidad', label: 'Ocupación y capacidad', icon: TrendingUp, end: false },
   { to: '/visitante/eventos', label: 'Eventos ambientales', icon: FileWarning, end: false },
 ]
 
