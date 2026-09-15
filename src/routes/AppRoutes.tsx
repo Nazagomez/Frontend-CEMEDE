@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
 import { LandingPage } from '@/pages/LandingPage'
 import { Login } from '@/pages/Login'
+import { NoAutorizado } from '@/pages/NoAutorizado'
+import { CambiarPassword } from '@/pages/CambiarPassword'
 import { VisitanteLayout } from '@/components/layout/visitante/VisitanteLayout'
 import { Home as VisitanteHome } from '@/pages/Visitante/Home'
 import { Capacidad as CapacidadVisitante } from '@/pages/Visitante/Capacidad'
@@ -13,6 +15,7 @@ import { Playas } from '@/pages/Admin/Playas'
 import { Visitantes } from '@/pages/Admin/Visitantes'
 import { Notificaciones } from '@/pages/Admin/Notificaciones'
 import { Capacidad } from '@/pages/Admin/Capacidad'
+import { Usuarios } from '@/pages/Admin/Usuarios'
 
 export function AppRoutes() {
   return (
@@ -20,6 +23,7 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/no-autorizado" element={<NoAutorizado />} />
 
         <Route element={<VisitanteLayout />}>
           <Route path="/visitante" element={<VisitanteHome />} />
@@ -28,6 +32,8 @@ export function AppRoutes() {
         </Route>
 
         <Route element={<ProtectedRoute />}>
+          <Route path="/cambiar-password" element={<CambiarPassword />} />
+
           <Route element={<AdminLayout />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/eventos" element={<Eventos />} />
@@ -35,6 +41,10 @@ export function AppRoutes() {
             <Route path="/admin/visitantes" element={<Visitantes />} />
             <Route path="/admin/notificaciones" element={<Notificaciones />} />
             <Route path="/admin/capacidad" element={<Capacidad />} />
+
+            <Route element={<ProtectedRoute requiredPermission="usuarios.gestionar" />}>
+              <Route path="/admin/usuarios" element={<Usuarios />} />
+            </Route>
           </Route>
         </Route>
       </Routes>

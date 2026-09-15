@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { registerUnauthorizedHandler } from '@/api/httpClient'
-import { loginService, restoreSessionService, logoutService } from '@/services/auth/authService'
+import { loginService, restoreSessionService, logoutService, cambiarPasswordForzadoService } from '@/services/auth/authService'
 import type { AuthContextValue, AuthUser, LoginCredentials } from '@/types/auth'
 
 export const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -30,9 +30,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(loggedInUser)
   }, [])
 
+  const cambiarPasswordForzado = useCallback(async (passwordNueva: string) => {
+    const updatedUser = await cambiarPasswordForzadoService(passwordNueva)
+    setUser(updatedUser)
+  }, [])
+
   const value = useMemo<AuthContextValue>(
-    () => ({ user, isAuthenticated: Boolean(user), isLoading, login, logout }),
-    [user, isLoading, login, logout]
+    () => ({ user, isAuthenticated: Boolean(user), isLoading, login, logout, cambiarPasswordForzado }),
+    [user, isLoading, login, logout, cambiarPasswordForzado]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

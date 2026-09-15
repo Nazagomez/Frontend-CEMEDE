@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { Waves, LayoutDashboard, Users, FileWarning, TrendingUp, MapPin, LogOut, Menu, X } from 'lucide-react'
+import { Waves, LayoutDashboard, Users, FileWarning, TrendingUp, MapPin, LogOut, Menu, X, ShieldCheck } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { ROL_LABEL } from '@/services/auth/permissions'
+import { ROL_LABEL, tienePermiso } from '@/services/auth/permissions'
 import { NotificacionesDropdown } from '@/components/Admin/notificaciones/NotificacionesDropdown'
 
-const navItems = [
+const navItemsBase = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/admin/visitantes', label: 'Visitantes', icon: Users },
   { to: '/admin/eventos', label: 'Eventos ambientales', icon: FileWarning },
@@ -21,6 +21,13 @@ const navItemClass = ({ isActive }: { isActive: boolean }) =>
 export function AdminLayout() {
   const { user, logout } = useAuth()
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const navItems = [
+    ...navItemsBase,
+    ...(user && tienePermiso(user.permisos, 'usuarios.gestionar')
+      ? [{ to: '/admin/usuarios', label: 'Usuarios', icon: ShieldCheck }]
+      : []),
+  ]
 
   const sidebarContent = (
     <>
