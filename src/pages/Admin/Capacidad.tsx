@@ -1,6 +1,6 @@
 import { RefreshCw, TrendingUp } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { puedeGestionarCapacidad } from '@/services/auth/permissions'
+import { tienePermiso } from '@/services/auth/permissions'
 import { useCapacidad } from '@/hooks/admin/useCapacidad'
 import { CapacidadPlayaSelector } from '@/components/Admin/capacidad/CapacidadPlayaSelector'
 import { EstimacionCard } from '@/components/Admin/capacidad/EstimacionCard'
@@ -9,7 +9,7 @@ import { HistorialTable } from '@/components/Admin/capacidad/HistorialTable'
 
 export function Capacidad() {
   const { user } = useAuth()
-  const puedeRecalcular = user ? puedeGestionarCapacidad(user.rol) : false
+  const puedeRecalcular = user ? tienePermiso(user.permisos, 'capacidad.gestionar') : false
   const {
     playas,
     playaId,

@@ -1,7 +1,7 @@
-import { loginRequest, fetchCurrentUser } from '@/api/authApi'
+import { loginRequest, fetchCurrentUser, putCambiarPassword } from '@/api/authApi'
 import { getToken, setToken as persistToken, clearSession } from '@/api/tokenStorage'
 import { isTokenValid } from '@/api/jwt'
-import type { AuthUser, LoginCredentials } from '@/types/auth'
+import type { AuthUser, AuthUserRaw, LoginCredentials } from '@/types/auth'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const PASSWORD_MIN_LENGTH = 6
@@ -29,10 +29,22 @@ export function validateLoginCredentials(email: string, password: string): Login
   return errors
 }
 
+function mapAuthUser(raw: AuthUserRaw): AuthUser {
+  return {
+    id: raw.id,
+    nombre: raw.nombre,
+    email: raw.email,
+    rol: raw.rol,
+    activo: raw.activo,
+    debeCambiarPassword: raw.debe_cambiar_password,
+    permisos: raw.permisos,
+  }
+}
+
 export async function loginService(credentials: LoginCredentials): Promise<AuthUser> {
   const { access_token, usuario } = await loginRequest(credentials)
   persistToken(access_token)
-  return usuario
+  return mapAuthUser(usuario)
 }
 
 export async function restoreSessionService(): Promise<AuthUser | null> {
@@ -42,11 +54,17 @@ export async function restoreSessionService(): Promise<AuthUser | null> {
     return null
   }
   try {
-    return await fetchCurrentUser()
+    const raw = await fetchCurrentUser()
+    return mapAuthUser(raw)
   } catch {
     clearSession()
     return null
   }
+}
+
+export async function cambiarPasswordForzadoService(passwordNueva: string): Promise<AuthUser> {
+  const raw = await putCambiarPassword(passwordNueva)
+  return mapAuthUser(raw)
 }
 
 export function logoutService(): void {

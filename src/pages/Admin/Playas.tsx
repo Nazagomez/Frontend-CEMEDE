@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
-import { puedeGestionarPlayas } from '@/services/auth/permissions'
+import { tienePermiso } from '@/services/auth/permissions'
 import { usePlayas } from '@/hooks/admin/usePlayas'
 import { PlayaCard } from '@/components/Admin/playas/PlayaCard'
 import { CrearPlayaModal } from '@/components/Admin/playas/CrearPlayaModal'
@@ -10,7 +10,7 @@ import type { PlayaConConfiguracion } from '@/types/admin/playas'
 
 export function Playas() {
   const { user } = useAuth()
-  const puedeEditar = user ? puedeGestionarPlayas(user.rol) : false
+  const puedeEditar = user ? tienePermiso(user.permisos, 'playas.gestionar') : false
 
   const { playas, isLoading, error, actionError, crear, actualizarConfiguracion, eliminar } = usePlayas()
   const [mostrarCrear, setMostrarCrear] = useState(false)
