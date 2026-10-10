@@ -21,8 +21,11 @@ export interface Estimacion {
   playaNombre: string
   fechaCalculo: string
   ccf: number
+  ccrFormula: number
+  ccrMl: number | null
   ccrFinal: number
   cce: number
+  metodoCcr: string
   visitantesActuales: number
   porcentajeOcupacion: number
   eventosActivos: number

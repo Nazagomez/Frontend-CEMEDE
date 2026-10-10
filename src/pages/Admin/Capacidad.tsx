@@ -1,6 +1,7 @@
 import { RefreshCw, TrendingUp } from 'lucide-react'
 import { useAuth } from '@/hooks/useAuth'
 import { tienePermiso } from '@/services/auth/permissions'
+import { MlHistoricoPanel } from '@/components/Admin/capacidad/MlHistoricoPanel'
 import { useCapacidad } from '@/hooks/admin/useCapacidad'
 import { CapacidadPlayaSelector } from '@/components/Admin/capacidad/CapacidadPlayaSelector'
 import { EstimacionCard } from '@/components/Admin/capacidad/EstimacionCard'
@@ -10,6 +11,7 @@ import { HistorialTable } from '@/components/Admin/capacidad/HistorialTable'
 export function Capacidad() {
   const { user } = useAuth()
   const puedeRecalcular = user ? tienePermiso(user.permisos, 'capacidad.gestionar') : false
+  const puedeMl = user ? tienePermiso(user.permisos, 'ml.gestionar') : false
   const {
     playas,
     playaId,
@@ -23,6 +25,7 @@ export function Capacidad() {
     recalcularError,
     recalculado,
     recalcular,
+    cargar,
   } = useCapacidad()
 
   return (
@@ -63,6 +66,7 @@ export function Capacidad() {
       {!isLoading && !error && estimacion && (
         <>
           <EstimacionCard estimacion={estimacion} />
+          <MlHistoricoPanel playaId={playaId} canManage={puedeMl} onDataChanged={cargar} />
           <EventosActivosDetalle eventos={eventosDetalle} />
           <HistorialTable historial={historial} />
         </>

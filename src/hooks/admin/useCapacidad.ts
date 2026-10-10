@@ -68,5 +68,6 @@ export function useCapacidad() {
     recalcularError,
     recalculado,
     recalcular,
+    cargar,
   }
 }

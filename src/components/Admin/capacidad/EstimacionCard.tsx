@@ -47,7 +47,10 @@ export function EstimacionCard({ estimacion }: EstimacionCardProps) {
         <div>
           <p className="text-xs text-ink-500">CCR · Capacidad Real</p>
           <p className="mt-1 text-2xl font-semibold text-navy-900">{Math.round(estimacion.ccrFinal).toLocaleString('es-CR')}</p>
-          <p className="text-xs text-ink-500">visitas/día</p>
+          <p className="text-xs text-ink-500">
+            {estimacion.metodoCcr === 'machine_learning' ? 'ML activo' : 'Fórmula'}
+            {estimacion.ccrMl != null ? ` · ML: ${Math.round(estimacion.ccrMl).toLocaleString('es-CR')}` : ''}
+          </p>
         </div>
         <div>
           <p className="text-xs text-ink-500">CCE · Capacidad Efectiva</p>
