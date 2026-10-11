@@ -15,7 +15,7 @@ export function EventoPlayaSelector({ playas, playaId, onChange }: EventoPlayaSe
           type="button"
           onClick={() => onChange(playa.id)}
           className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
-            playaId === playa.id ? 'border-navy-700 bg-navy-900 text-white' : 'border-gray-300 text-ink-700 hover:bg-gray-50'
+            playaId === playa.id ? 'border-white/40 bg-white/20 text-white' : 'border-white/15 bg-white/10 text-white hover:bg-white/15'
           }`}
         >
           {playa.nombre}

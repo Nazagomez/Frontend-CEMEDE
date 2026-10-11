@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { ShieldAlert } from 'lucide-react'
+import { InstitutionalLogos } from '@/components/brand/InstitutionalLogos'
 
 export function NoAutorizado() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center gap-4 bg-gray-50 px-4 text-center">
+      <InstitutionalLogos size="md" tone="onLight" />
       <ShieldAlert className="h-10 w-10 text-alert-600" aria-hidden />
       <h1 className="text-xl font-semibold text-navy-900">No tenés acceso a esta sección</h1>
       <p className="max-w-sm text-sm text-ink-500">Esta página está reservada para administradores.</p>

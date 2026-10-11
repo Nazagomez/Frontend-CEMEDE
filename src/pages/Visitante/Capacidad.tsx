@@ -11,17 +11,17 @@ export function Capacidad() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="flex items-center gap-2 text-xl font-semibold text-navy-900">
+        <h1 className="flex items-center gap-2 text-xl font-semibold text-white">
           <TrendingUp className="h-5 w-5" aria-hidden />
           Capacidad de Carga Turística
         </h1>
-        <p className="text-sm text-ink-500">Estado actual de ocupación y capacidad de cada playa monitoreada.</p>
+        <p className="text-sm text-white">Estado actual de ocupación y capacidad de cada playa monitoreada.</p>
       </div>
 
       <QueEsCapacidadInfo />
 
-      {isLoading && <p className="text-sm text-ink-500">Cargando…</p>}
-      {error && <p className="text-sm text-alert-600">{error}</p>}
+      {isLoading && <p className="text-sm text-white">Cargando…</p>}
+      {error && <p className="text-sm text-red-200">{error}</p>}
 
       {!isLoading && !error && (
         <>

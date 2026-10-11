@@ -1,4 +1,4 @@
-import { loginRequest, fetchCurrentUser, putCambiarPassword } from '@/api/authApi'
+import { loginRequest, fetchCurrentUser, putCambiarPassword, postRecuperarPassword } from '@/api/authApi'
 import { getToken, setToken as persistToken, clearSession } from '@/api/tokenStorage'
 import { isTokenValid } from '@/api/jwt'
 import type { AuthUser, AuthUserRaw, LoginCredentials } from '@/types/auth'
@@ -9,6 +9,18 @@ const PASSWORD_MIN_LENGTH = 6
 export interface LoginFieldErrors {
   email?: string
   password?: string
+}
+
+/** Returns a validation message when the recovery email is empty or malformed. */
+export function validateRecoveryEmail(email: string): string | null {
+  if (!email.trim()) return 'El correo es obligatorio.'
+  if (!EMAIL_REGEX.test(email)) return 'Ingresá un correo válido.'
+  return null
+}
+
+/** Requests a password recovery email for an existing researcher account. */
+export async function solicitarRecuperacionPassword(email: string): Promise<void> {
+  await postRecuperarPassword(email.trim())
 }
 
 export function validateLoginCredentials(email: string, password: string): LoginFieldErrors {

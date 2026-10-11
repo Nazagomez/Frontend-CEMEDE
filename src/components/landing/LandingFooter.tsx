@@ -1,19 +1,13 @@
-import { Waves } from 'lucide-react'
+import { InstitutionalLogos } from '@/components/brand/InstitutionalLogos'
 
 export function LandingFooter() {
   return (
-    <footer className="mt-auto bg-navy-900 px-6 py-5">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 text-xs text-white/70 sm:flex-row">
-        <div className="flex items-center gap-2">
-          <Waves className="h-4 w-4" aria-hidden />
-          <div className="leading-tight">
-            <p className="font-medium text-white">SITEC</p>
-            <p>Estimación de Capacidad Turística</p>
-          </div>
+    <footer className="mt-auto px-6 py-10">
+        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 text-xs text-white/70 sm:flex-row">
+          <InstitutionalLogos size="sm" tone="onDark" />
+          <p className="text-center">Sistema de Información para la Estimación de Capacidad Turística</p>
+          <p>2026 SITEC · CEMEDE</p>
         </div>
-        <p>Sistema de Información para la Estimación de Capacidad Turística</p>
-        <p>2026 SITEC</p>
-      </div>
     </footer>
   )
 }

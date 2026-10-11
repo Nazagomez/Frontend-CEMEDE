@@ -6,9 +6,9 @@ import type { EstadoOcupacion } from '@/types/Admin/capacidad'
 import heroPlaya from '@/assets/hero-playa.jpeg'
 
 const disponibilidad: Record<EstadoOcupacion, { label: string; badge: string }> = {
-  normal: { label: 'Disponible', badge: 'bg-green-100 text-green-700' },
-  advertencia: { label: 'Concurrida', badge: 'bg-yellow-100 text-yellow-700' },
-  critico: { label: 'Al límite', badge: 'bg-alert-600/10 text-alert-600' },
+  normal: { label: 'Disponible', badge: 'bg-white/10 text-white/90' },
+  advertencia: { label: 'Concurrida', badge: 'bg-white/10 text-white/90' },
+  critico: { label: 'Al límite', badge: 'bg-white/10 text-white/90' },
 }
 
 const AREA_PROTEGIDA: Record<string, string> = {
@@ -33,17 +33,17 @@ export function PlayasSection() {
   const playa = resumen.find((p) => p.id === seleccionadaId) ?? resumen[0]
 
   return (
-    <section id="playas" className="bg-slate-50 px-6 py-20">
+    <section id="playas" className="bg-transparent px-6 py-20">
       <div className="mx-auto max-w-5xl text-center">
-        <p className="text-xs font-medium uppercase tracking-wider text-navy-700">Dos territorios monitoreados</p>
-        <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-semibold text-navy-900 sm:text-3xl">
+        <p className="text-xs font-medium uppercase tracking-wider text-white/70">Dos territorios monitoreados</p>
+        <h2 className="mx-auto mt-2 max-w-2xl text-2xl font-semibold text-white sm:text-3xl">
           La capacidad no es igual para todas las playas
         </h2>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-ink-500">
+        <p className="mx-auto mt-3 max-w-xl text-sm text-white/75">
           Cada sitio tiene una historia, un ecosistema y un límite distinto. Seleccioná una playa para conocer su contexto.
         </p>
 
-        {isLoading && <div className="mt-10 h-96 animate-pulse rounded-2xl bg-gray-200" />}
+        {isLoading && <div className="mt-10 h-96 animate-pulse rounded-2xl bg-white/15" />}
 
         {!isLoading && resumen.length > 0 && (
           <>
@@ -54,7 +54,7 @@ export function PlayasSection() {
                   type="button"
                   onClick={() => setSeleccionadaId(p.id)}
                   className={`flex items-center gap-1.5 rounded-full border px-5 py-2.5 text-sm font-medium transition-colors ${
-                    p.id === playa?.id ? 'border-navy-900 bg-navy-900 text-white' : 'border-gray-300 bg-white text-ink-700 hover:bg-gray-50'
+                    p.id === playa?.id ? 'border-white/40 bg-white/20 text-white' : 'border-white/15 bg-white/10 text-white/80 hover:bg-white/15'
                   }`}
                 >
                   <MapPin className="h-3.5 w-3.5" aria-hidden />
@@ -64,18 +64,18 @@ export function PlayasSection() {
             </div>
 
             {playa && (
-              <div className="mt-8 grid grid-cols-1 overflow-hidden rounded-2xl border border-gray-200 bg-white text-left shadow-sm md:grid-cols-2">
+              <div className="mt-8 grid grid-cols-1 overflow-hidden rounded-2xl border border-white/15 bg-white/10 text-left text-white backdrop-blur-md md:grid-cols-2">
                 <div className="relative min-h-64">
                   <img src={heroPlaya} alt={playa.nombre} className="absolute inset-0 h-full w-full object-cover" />
-                  <span className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-xs font-medium text-navy-900">
-                    <span className="h-1.5 w-1.5 rounded-full bg-green-500" aria-hidden />
+                  <span className="absolute left-4 top-4 flex items-center gap-1.5 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium text-white backdrop-blur-sm">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white/80" aria-hidden />
                     Monitoreo activo
                   </span>
                 </div>
 
                 <div className="flex flex-col p-8">
                   <div className="flex items-start justify-between gap-3">
-                    <p className="text-xs font-medium uppercase tracking-wider text-ink-500">
+                    <p className="text-xs font-medium uppercase tracking-wider text-white/60">
                       {playa.canton}, {playa.provincia}
                     </p>
                     {playa.estado && (
@@ -85,33 +85,33 @@ export function PlayasSection() {
                     )}
                   </div>
 
-                  <h3 className="mt-1 text-2xl font-semibold text-navy-900">{playa.nombre}</h3>
+                  <h3 className="mt-1 text-2xl font-semibold">{playa.nombre}</h3>
 
-                  <p className="mt-3 border-l-2 border-alert-600 pl-3 text-sm font-medium text-navy-900">
+                  <p className="mt-3 border-l-2 border-white/30 pl-3 text-sm font-medium text-white/90">
                     {AREA_PROTEGIDA[playa.nombre] ?? 'Zona costera protegida de Guanacaste'}
                   </p>
 
-                  <p className="mt-3 text-sm text-ink-700">
+                  <p className="mt-3 text-sm text-white/75">
                     {playa.descripcion || 'Playa integrada al sistema de monitoreo de capacidad de carga turística de CEMEDE.'}
                   </p>
 
-                  <div className="mt-6 grid grid-cols-3 gap-4 border-t border-gray-100 pt-5">
+                  <div className="mt-6 grid grid-cols-3 gap-4 border-t border-white/10 pt-5">
                     <div>
-                      <p className="text-xl font-semibold text-navy-900">{playa.visitantesActuales}</p>
-                      <p className="text-xs text-ink-500">personas ahora</p>
+                      <p className="text-xl font-semibold">{playa.visitantesActuales}</p>
+                      <p className="text-xs text-white/60">personas ahora</p>
                     </div>
                     <div>
-                      <p className="text-xl font-semibold text-navy-900">{Math.round(playa.cce).toLocaleString('es-CR')}</p>
-                      <p className="text-xs text-ink-500">capacidad efectiva</p>
+                      <p className="text-xl font-semibold">{Math.round(playa.cce).toLocaleString('es-CR')}</p>
+                      <p className="text-xs text-white/60">capacidad efectiva</p>
                     </div>
                     <div>
-                      <p className="text-xl font-semibold text-navy-900">{playa.porcentajeOcupacion}%</p>
-                      <p className="text-xs text-ink-500">ocupación</p>
+                      <p className="text-xl font-semibold">{playa.porcentajeOcupacion}%</p>
+                      <p className="text-xs text-white/60">ocupación</p>
                     </div>
                   </div>
 
                   <div className="mt-6 flex items-center justify-between">
-                    <Link to="/visitante" className="flex items-center gap-1 text-sm font-medium text-navy-700 hover:text-navy-900">
+                    <Link to="/visitante" className="flex items-center gap-1 text-sm font-medium text-white/90 hover:text-white">
                       Ver estado y capacidad
                       <ArrowRight className="h-3.5 w-3.5" aria-hidden />
                     </Link>
@@ -119,7 +119,7 @@ export function PlayasSection() {
                       <button
                         type="button"
                         onClick={() => abrirEnMapa(playa.latitud as number, playa.longitud as number)}
-                        className="flex items-center gap-1 text-xs text-ink-500 hover:text-navy-900"
+                        className="flex items-center gap-1 text-xs text-white/60 hover:text-white"
                       >
                         Ver en el mapa
                         <ExternalLink className="h-3 w-3" aria-hidden />

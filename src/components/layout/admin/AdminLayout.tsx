@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { Waves, LayoutDashboard, Users, FileWarning, TrendingUp, MapPin, LogOut, Menu, X, ShieldCheck } from 'lucide-react'
+import { LayoutDashboard, Users, FileWarning, TrendingUp, MapPin, LogOut, Menu, X, ShieldCheck } from 'lucide-react'
+import { InstitutionalLogos } from '@/components/brand/InstitutionalLogos'
 import { useAuth } from '@/hooks/useAuth'
 import { ROL_LABEL, tienePermiso } from '@/services/auth/permissions'
 import { NotificacionesDropdown } from '@/components/Admin/notificaciones/NotificacionesDropdown'
@@ -31,14 +32,9 @@ export function AdminLayout() {
 
   const sidebarContent = (
     <>
-      <div className="flex items-center gap-2 px-2 pb-6">
-        <div className="flex h-9 w-9 items-center justify-center rounded-md bg-white/10">
-          <Waves className="h-5 w-5 text-white" strokeWidth={2.25} aria-hidden />
-        </div>
-        <div className="leading-tight">
-          <p className="text-sm font-semibold text-white">SITEC</p>
-          <p className="text-[10px] text-white/60">Panel investigador</p>
-        </div>
+      <div className="px-1 pb-6">
+        <InstitutionalLogos size="sm" tone="onLight" framed />
+        <p className="mt-2 px-1 text-[10px] text-white/60">Panel investigador</p>
       </div>
 
       <nav className="flex flex-1 flex-col gap-1" aria-label="Panel admin">
@@ -68,8 +64,7 @@ export function AdminLayout() {
     <div className="min-h-screen md:flex">
       <div className="flex items-center justify-between bg-navy-900 px-4 py-3 md:hidden">
         <div className="flex items-center gap-2">
-          <Waves className="h-5 w-5 text-white" strokeWidth={2.25} aria-hidden />
-          <span className="text-sm font-semibold text-white">SITEC</span>
+          <InstitutionalLogos size="sm" tone="onLight" framed />
         </div>
         <div className="flex items-center gap-1">
           <NotificacionesDropdown />
@@ -88,7 +83,7 @@ export function AdminLayout() {
         </div>
       )}
 
-      <aside className="hidden w-60 shrink-0 flex-col bg-navy-900 px-3 py-4 md:flex">
+      <aside className="hidden w-72 shrink-0 flex-col bg-navy-900 px-3 py-4 md:flex">
         {sidebarContent}
       </aside>
 

@@ -22,14 +22,14 @@ export function Eventos() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="flex items-center gap-2 text-xl font-semibold text-navy-900">
+        <h1 className="flex items-center gap-2 text-xl font-semibold text-white">
           <FileWarning className="h-5 w-5" aria-hidden />
           Eventos ambientales
         </h1>
-        <p className="text-sm text-ink-500">Consultá alertas activas y reportá condiciones fuera de lo normal.</p>
+        <p className="text-sm text-white">Consultá alertas activas y reportá condiciones fuera de lo normal.</p>
       </div>
 
-      {cargandoPlayas && <p className="text-sm text-ink-500">Cargando playas…</p>}
+      {cargandoPlayas && <p className="text-sm text-white">Cargando playas…</p>}
 
       {!cargandoPlayas && (
         <>
@@ -37,9 +37,9 @@ export function Eventos() {
 
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="flex flex-col gap-3">
-              <h2 className="text-sm font-semibold text-navy-900">Eventos activos</h2>
-              {isLoading && <p className="text-sm text-ink-500">Cargando eventos…</p>}
-              {error && <p className="text-sm text-alert-600">{error}</p>}
+              <h2 className="text-sm font-semibold text-white">Eventos activos</h2>
+              {isLoading && <p className="text-sm text-white">Cargando eventos…</p>}
+              {error && <p className="text-sm text-red-200">{error}</p>}
               {!isLoading && !error && <EventosActivosList eventos={eventos} />}
             </div>
 

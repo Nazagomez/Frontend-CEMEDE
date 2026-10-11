@@ -1,8 +1,12 @@
 import { useState, type FormEvent, type FocusEvent } from 'react'
 import { Link, Navigate, useLocation } from 'react-router-dom'
-import { Waves, Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, ArrowRight } from 'lucide-react'
+import { InstitutionalLogos } from '@/components/brand/InstitutionalLogos'
 import { useAuth } from '@/hooks/useAuth'
 import { validateLoginCredentials } from '@/services/auth/authService'
+import heroCosta from '@/assets/hero-costa.jpg'
+
+const HERO_VIDEO = '/hero-pacifico.m4v'
 
 export function Login() {
   const { login, isAuthenticated } = useAuth()
@@ -45,31 +49,31 @@ export function Login() {
   }
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-navy-950 px-4 py-12">
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-32 -left-24 h-96 w-96 rounded-full bg-navy-700/40 blur-3xl" />
-        <div className="absolute -right-24 top-1/3 h-96 w-96 rounded-full bg-navy-600/30 blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-alert-600/10 blur-3xl" />
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 py-12">
+      <div className="pointer-events-none absolute inset-0 bg-[#062833]" aria-hidden>
+        <img src={heroCosta} alt="" className="hero-still absolute inset-0 h-full w-full object-cover object-[center_40%]" />
+        <video className="hero-video absolute inset-0 h-full w-full object-cover" autoPlay muted loop playsInline preload="auto" poster={heroCosta}>
+          <source src={HERO_VIDEO} type="video/mp4" />
+        </video>
+        <div className="absolute inset-0 bg-[#062833]/45" />
       </div>
 
-      <div className="relative z-10 w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl shadow-black/40 sm:p-10">
+      <div className="relative z-10 w-full max-w-md rounded-2xl border border-white/15 bg-white/10 p-6 text-white backdrop-blur-md sm:p-10">
         <div className="mb-8 flex flex-col items-center text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy-900">
-            <Waves className="h-6 w-6 text-white" strokeWidth={2.25} aria-hidden />
-          </div>
-          <h1 className="mt-4 text-xl font-semibold text-navy-900">SITEC</h1>
-          <p className="mt-1 max-w-[280px] text-sm text-ink-500">
+          <InstitutionalLogos size="lg" tone="onDark" />
+          <h1 className="mt-4 text-xl font-semibold">SITEC</h1>
+          <p className="mt-1 max-w-[280px] text-sm text-white">
             Sistema de Información para la Estimación de Capacidad Turística
           </p>
         </div>
 
-        <p className="mb-5 text-sm font-medium text-ink-700">Acceso investigador</p>
+        <p className="mb-5 text-sm font-medium">Acceso investigador</p>
 
         <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="email" className="text-sm font-medium text-ink-700">Correo electrónico</label>
+            <label htmlFor="email" className="text-sm font-medium text-white">Correo electrónico</label>
             <div className="relative">
-              <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500" aria-hidden />
+              <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
               <input
                 id="email"
                 type="email"
@@ -78,21 +82,21 @@ export function Login() {
                 onBlur={handleBlur('email')}
                 aria-invalid={Boolean(touched.email && errors.email)}
                 aria-describedby={touched.email && errors.email ? 'email-error' : undefined}
-                className={`w-full rounded-lg border py-2.5 pl-9 pr-3 text-sm text-ink-900 outline-none transition-colors focus:ring-2 focus:ring-navy-700/10 ${
-                  touched.email && errors.email ? 'border-alert-600 focus:border-alert-600' : 'border-gray-300 focus:border-navy-700'
+                className={`scheme-dark w-full rounded-lg border bg-[#062833]/45 py-2.5 pl-9 pr-3 text-sm text-white outline-none transition-colors focus:border-white ${
+                  touched.email && errors.email ? 'border-red-300' : 'border-white/30'
                 }`}
                 autoComplete="email"
               />
             </div>
             {touched.email && errors.email && (
-              <p id="email-error" role="alert" className="text-xs text-alert-600">{errors.email}</p>
+              <p id="email-error" role="alert" className="text-xs text-red-200">{errors.email}</p>
             )}
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label htmlFor="password" className="text-sm font-medium text-ink-700">Contraseña</label>
+            <label htmlFor="password" className="text-sm font-medium text-white">Contraseña</label>
             <div className="relative">
-              <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500" aria-hidden />
+              <Lock className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
@@ -101,35 +105,35 @@ export function Login() {
                 onBlur={handleBlur('password')}
                 aria-invalid={Boolean(touched.password && errors.password)}
                 aria-describedby={touched.password && errors.password ? 'password-error' : undefined}
-                className={`w-full rounded-lg border py-2.5 pl-9 pr-9 text-sm text-ink-900 outline-none transition-colors focus:ring-2 focus:ring-navy-700/10 ${
-                  touched.password && errors.password ? 'border-alert-600 focus:border-alert-600' : 'border-gray-300 focus:border-navy-700'
+                className={`scheme-dark w-full rounded-lg border bg-[#062833]/45 py-2.5 pl-9 pr-9 text-sm text-white outline-none transition-colors focus:border-white ${
+                  touched.password && errors.password ? 'border-red-300' : 'border-white/30'
                 }`}
                 autoComplete="current-password"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-500 hover:text-ink-700"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-white hover:text-white/80"
                 aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
             {touched.password && errors.password && (
-              <p id="password-error" role="alert" className="text-xs text-alert-600">{errors.password}</p>
+              <p id="password-error" role="alert" className="text-xs text-red-200">{errors.password}</p>
             )}
           </div>
 
           <div className="flex justify-end">
-            <button type="button" className="text-sm text-navy-700 hover:underline">¿Olvidaste tu contraseña?</button>
+            <Link to="/recuperar-password" className="text-sm text-white hover:underline">¿Olvidaste tu contraseña?</Link>
           </div>
 
-          {formError && <p role="alert" className="text-sm text-alert-600">{formError}</p>}
+          {formError && <p role="alert" className="text-sm text-red-200">{formError}</p>}
 
           <button
             type="submit"
             disabled={submitting || (Object.keys(touched).length > 0 && !isValid)}
-            className="mt-1 flex items-center justify-center gap-1.5 rounded-lg bg-navy-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navy-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-1 flex items-center justify-center gap-1.5 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-navy-900 transition-colors hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {submitting ? 'Ingresando…' : 'Iniciar sesión'}
             {!submitting && <ArrowRight className="h-4 w-4" aria-hidden />}
@@ -137,14 +141,14 @@ export function Login() {
         </form>
 
         <div className="my-6 flex items-center gap-3">
-          <span className="h-px flex-1 bg-gray-200" />
-          <span className="text-xs text-ink-500">o</span>
-          <span className="h-px flex-1 bg-gray-200" />
+          <span className="h-px flex-1 bg-white/20" />
+          <span className="text-xs text-white">o</span>
+          <span className="h-px flex-1 bg-white/20" />
         </div>
 
         <Link
           to="/visitante"
-          className="flex w-full items-center justify-center rounded-lg border border-navy-900 px-4 py-2.5 text-sm font-medium text-navy-900 transition-colors hover:bg-navy-900 hover:text-white"
+          className="flex w-full items-center justify-center rounded-full border border-white/30 bg-white/10 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/15"
         >
           Continuar como visitante
         </Link>

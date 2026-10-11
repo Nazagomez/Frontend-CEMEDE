@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
 import { LandingPage } from '@/pages/LandingPage'
 import { Login } from '@/pages/Login'
+import { RecuperarPassword } from '@/pages/RecuperarPassword'
+import { NotFound } from '@/pages/NotFound'
 import { NoAutorizado } from '@/pages/NoAutorizado'
 import { CambiarPassword } from '@/pages/CambiarPassword'
 import { VisitanteLayout } from '@/components/layout/visitante/VisitanteLayout'
@@ -23,6 +25,7 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/recuperar-password" element={<RecuperarPassword />} />
         <Route path="/no-autorizado" element={<NoAutorizado />} />
 
         <Route element={<VisitanteLayout />}>
@@ -47,6 +50,8 @@ export function AppRoutes() {
             </Route>
           </Route>
         </Route>
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

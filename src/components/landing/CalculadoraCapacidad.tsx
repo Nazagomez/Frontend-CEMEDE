@@ -27,18 +27,18 @@ export function CalculadoraCapacidad() {
   const pctBarra = resultado.ccf > 0 ? Math.min((resultado.cce / resultado.ccf) * 100, 100) : 0
 
   return (
-    <section id="calculadora" className="bg-slate-50 px-6 py-20">
+    <section id="calculadora" className="bg-transparent px-6 py-20">
       <div className="mx-auto max-w-5xl">
         <div className="text-center">
-          <p className="text-xs font-medium uppercase tracking-wider text-navy-700">Probá la metodología</p>
-          <h2 className="mx-auto mt-2 max-w-xl text-2xl font-semibold text-navy-900 sm:text-3xl">Una cifra que se entiende</h2>
-          <p className="mx-auto mt-3 max-w-lg text-sm text-ink-500">
+          <p className="text-xs font-medium uppercase tracking-wider text-white/70">Probá la metodología</p>
+          <h2 className="mx-auto mt-2 max-w-xl text-2xl font-semibold text-white sm:text-3xl">Una cifra que se entiende</h2>
+          <p className="mx-auto mt-3 max-w-lg text-sm text-white/75">
             Ajustá los valores y observá cómo cambia la capacidad recomendada para una playa.
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-2xl border border-gray-200 shadow-sm lg:grid-cols-2">
-          <div className="flex flex-col gap-5 bg-white p-8">
+        <div className="mt-10 grid grid-cols-1 overflow-hidden rounded-2xl border border-white/15 bg-white/10 text-white backdrop-blur-md lg:grid-cols-2">
+          <div className="flex flex-col gap-5 p-8">
             <Campo label="Área útil de playa" valor={areaUtil} unidad="m²" min={500} max={100000} step={500} onChange={setAreaUtil} />
             <Campo
               label="Espacio por visitante"
@@ -54,8 +54,8 @@ export function CalculadoraCapacidad() {
 
             <div>
               <div className="flex items-center justify-between text-sm">
-                <label className="font-medium text-ink-700">Capacidad de manejo</label>
-                <span className="font-medium text-navy-900">{capacidadManejo}%</span>
+                <label className="font-medium text-white">Capacidad de manejo</label>
+                <span className="font-medium">{capacidadManejo}%</span>
               </div>
               <input
                 type="range"
@@ -63,15 +63,15 @@ export function CalculadoraCapacidad() {
                 max={100}
                 value={capacidadManejo}
                 onChange={(e) => setCapacidadManejo(Number(e.target.value))}
-                className="mt-2 w-full accent-navy-700"
+                className="mt-2 w-full accent-white/80"
               />
-              <p className="mt-1 text-xs text-ink-500">Qué tan preparado está el sitio: personal, señalización e infraestructura.</p>
+              <p className="mt-1 text-xs text-white">Qué tan preparado está el sitio: personal, señalización e infraestructura.</p>
             </div>
 
             <div>
               <div className="flex items-center justify-between text-sm">
-                <label className="font-medium text-ink-700">Condición ambiental hoy</label>
-                <span className="font-medium text-navy-900">-{reduccionAmbiental}%</span>
+                <label className="font-medium text-white">Condición ambiental hoy</label>
+                <span className="font-medium">-{reduccionAmbiental}%</span>
               </div>
               <input
                 type="range"
@@ -79,19 +79,19 @@ export function CalculadoraCapacidad() {
                 max={80}
                 value={reduccionAmbiental}
                 onChange={(e) => setReduccionAmbiental(Number(e.target.value))}
-                className="mt-2 w-full accent-alert-600"
+                className="mt-2 w-full accent-white/80"
               />
-              <p className="mt-1 text-xs text-ink-500">Simulá una marea alta, marea roja u otro evento que reduzca el área disponible.</p>
+              <p className="mt-1 text-xs text-white">Simulá una marea alta, marea roja u otro evento que reduzca el área disponible.</p>
             </div>
           </div>
 
-          <div className="flex flex-col justify-center bg-navy-900 p-8 text-white">
-            <div className="flex items-center gap-2 text-white/60">
+          <div className="flex flex-col justify-center border-t border-white/10 p-8 lg:border-l lg:border-t-0">
+            <div className="flex items-center gap-2 text-white">
               <Calculator className="h-4 w-4" aria-hidden />
               <span className="text-xs">Capacidad efectiva estimada</span>
             </div>
             <p className="mt-2 text-5xl font-bold">{resultado.cce.toLocaleString('es-CR')}</p>
-            <p className="mt-1 text-sm text-white/60">visitas por día · la cifra que no conviene superar</p>
+            <p className="mt-1 text-sm text-white">visitas por día · la cifra que no conviene superar</p>
 
             <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-white/15">
               <div className="h-full rounded-full bg-white transition-[width] duration-300 ease-out" style={{ width: `${pctBarra}%` }} />
@@ -99,11 +99,11 @@ export function CalculadoraCapacidad() {
 
             <div className="mt-8 flex items-center gap-8 border-t border-white/10 pt-6">
               <div>
-                <p className="text-xs text-white/60">CCF física</p>
+                <p className="text-xs text-white">CCF física</p>
                 <p className="mt-1 text-xl font-semibold">{resultado.ccf.toLocaleString('es-CR')}</p>
               </div>
               <div>
-                <p className="text-xs text-white/60">CCR real</p>
+                <p className="text-xs text-white">CCR real</p>
                 <p className="mt-1 text-xl font-semibold">{resultado.ccr.toLocaleString('es-CR')}</p>
               </div>
             </div>
@@ -138,7 +138,7 @@ function Campo({
 }) {
   return (
     <div>
-      <label className="text-sm font-medium text-ink-700">{label}</label>
+      <label className="text-sm font-medium text-white">{label}</label>
       <div className="mt-1.5 flex items-center gap-2">
         <input
           type="number"
@@ -147,9 +147,9 @@ function Campo({
           step={step}
           value={valor}
           onChange={(e) => onChange(Number(e.target.value))}
-          className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-navy-700"
+          className="scheme-dark w-full rounded-lg border border-white/30 bg-[#062833]/45 px-3 py-2 text-sm text-white outline-none focus:border-white"
         />
-        <span className="shrink-0 text-xs text-ink-500">{unidad}</span>
+        <span className="shrink-0 text-xs text-white">{unidad}</span>
       </div>
     </div>
   )

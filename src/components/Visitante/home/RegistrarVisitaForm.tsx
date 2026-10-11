@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { MapPin, Users } from 'lucide-react'
 import type { Playa } from '@/types/playas'
 import type { RegistrarVisitaPayload } from '@/types/Visitante/home'
@@ -8,6 +8,7 @@ interface RegistrarVisitaFormProps {
   enviando: boolean
   enviado: boolean
   onSubmit: (payload: RegistrarVisitaPayload) => void
+  onPlayaChange: (playaId: number) => void
 }
 
 const DURACION_OPCIONES = [
@@ -20,10 +21,13 @@ const DURACION_OPCIONES = [
   { value: '8', label: 'Todo el día (8 horas)' },
 ]
 
-export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit }: RegistrarVisitaFormProps) {
+export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit, onPlayaChange }: RegistrarVisitaFormProps) {
   const [playaId, setPlayaId] = useState<number | null>(playas[0]?.id ?? null)
   const [personas, setPersonas] = useState(1)
   const [duracion, setDuracion] = useState('')
+  useEffect(() => {
+    if (playaId !== null) onPlayaChange(playaId)
+  }, [playaId, onPlayaChange])
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
@@ -36,16 +40,16 @@ export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit }: Reg
   }
 
   return (
-    <div className="rounded-xl border border-gray-200 bg-white p-6">
-      <div className="flex items-center gap-1.5 text-navy-900">
+    <div className="rounded-2xl border border-white/15 bg-white/10 p-6 text-white backdrop-blur-md">
+      <div className="flex items-center gap-1.5">
         <MapPin className="h-4 w-4" aria-hidden />
         <h2 className="font-semibold">Registrar Visita</h2>
       </div>
-      <p className="mt-1 text-xs text-ink-500">Registrá tu visita para ayudarnos a monitorear la ocupación.</p>
+      <p className="mt-1 text-xs text-white">Registrá tu visita para ayudarnos a monitorear la ocupación.</p>
 
       <form onSubmit={handleSubmit} className="mt-5 flex flex-col gap-4">
         <div>
-          <label className="text-sm font-medium text-ink-700">Selecciona una playa</label>
+          <label className="text-sm font-medium text-white">Selecciona una playa</label>
           <div className="mt-1.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
             {playas.map((playa) => (
               <button
@@ -53,7 +57,7 @@ export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit }: Reg
                 type="button"
                 onClick={() => setPlayaId(playa.id)}
                 className={`rounded-lg border px-3 py-2 text-sm font-medium transition-colors ${
-                  playaId === playa.id ? 'border-navy-700 bg-navy-900 text-white' : 'border-gray-300 text-ink-700 hover:bg-gray-50'
+                  playaId === playa.id ? 'border-white/40 bg-white/20 text-white' : 'border-white/15 bg-white/10 text-white hover:bg-white/15'
                 }`}
               >
                 {playa.nombre}
@@ -63,45 +67,45 @@ export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit }: Reg
         </div>
 
         <div>
-          <label htmlFor="personas" className="text-sm font-medium text-ink-700">Número de personas</label>
+          <label htmlFor="personas" className="text-sm font-medium text-white">Número de personas</label>
           <div className="relative mt-1.5">
-            <Users className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-500" aria-hidden />
+            <Users className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white" aria-hidden />
             <input
               id="personas"
               type="number"
               min={1}
               value={personas}
               onChange={(e) => setPersonas(Number(e.target.value))}
-              className="w-full rounded-lg border border-gray-300 py-2 pl-9 pr-3 text-sm outline-none focus:border-navy-700"
+              className="scheme-dark w-full rounded-lg border border-white/30 bg-[#062833]/45 py-2 pl-9 pr-3 text-sm text-white outline-none focus:border-white"
             />
           </div>
         </div>
 
         <div>
-          <label htmlFor="duracion" className="text-sm font-medium text-ink-700">¿Cuánto tiempo aproximado vas a estar?</label>
+          <label htmlFor="duracion" className="text-sm font-medium text-white">¿Cuánto tiempo aproximado vas a estar?</label>
           <select
             id="duracion"
             value={duracion}
             onChange={(e) => setDuracion(e.target.value)}
-            className="mt-1.5 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-navy-700"
+            className="scheme-dark mt-1.5 w-full rounded-lg border border-white/30 bg-[#062833]/45 px-3 py-2 text-sm text-white outline-none focus:border-white"
           >
             {DURACION_OPCIONES.map((opcion) => (
               <option key={opcion.value} value={opcion.value}>{opcion.label}</option>
             ))}
           </select>
-          <p className="mt-1 text-xs text-ink-500">Tu registro se cerrará automáticamente pasado ese tiempo.</p>
+          <p className="mt-1 text-xs text-white">Tu registro se cerrará automáticamente pasado ese tiempo.</p>
         </div>
 
         <button
           type="submit"
           disabled={enviando || playaId === null}
-          className="mt-1 rounded-lg bg-navy-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-navy-800 disabled:opacity-50"
+          className="mt-1 rounded-full bg-white px-4 py-2.5 text-sm font-medium text-navy-900 transition-colors hover:bg-white/90 disabled:opacity-50"
         >
           {enviando ? 'Enviando…' : 'Registrar visita'}
         </button>
 
         {enviado && (
-          <p className="text-xs text-ink-500">¡Visita registrada! Gracias por ayudarnos a monitorear la ocupación.</p>
+          <p className="text-xs text-white">¡Visita registrada! Gracias por ayudarnos a monitorear la ocupación.</p>
         )}
       </form>
     </div>

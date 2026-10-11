@@ -68,4 +68,17 @@ body {
   .hero-zoom {
     animation: none;
   }
+  .hero-video {
+    display: none;
+  }
+}
+
+.hero-still {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-still {
+    display: block;
+  }
 }

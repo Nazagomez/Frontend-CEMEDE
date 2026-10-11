@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Lock, Waves } from 'lucide-react'
+import { Lock } from 'lucide-react'
+import { InstitutionalLogos } from '@/components/brand/InstitutionalLogos'
 import { useAuth } from '@/hooks/useAuth'
 
 export function CambiarPassword() {
@@ -37,9 +38,7 @@ export function CambiarPassword() {
     <div className="flex min-h-screen items-center justify-center bg-navy-950 px-4">
       <div className="w-full max-w-sm rounded-2xl bg-white p-8 shadow-2xl">
         <div className="flex flex-col items-center text-center">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-navy-900">
-            <Waves className="h-6 w-6 text-white" strokeWidth={2.25} aria-hidden />
-          </div>
+          <InstitutionalLogos size="md" tone="onLight" />
           <h1 className="mt-4 text-lg font-semibold text-navy-900">Elegí tu contraseña</h1>
           <p className="mt-1 text-sm text-ink-500">Es tu primer ingreso — definí una contraseña propia para continuar.</p>
         </div>
