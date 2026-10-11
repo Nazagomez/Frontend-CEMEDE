@@ -17,8 +17,8 @@ export function useNotificaciones() {
   const [error, setError] = useState<string | null>(null)
   const [actionError, setActionError] = useState<string | null>(null)
 
-  const cargar = useCallback(() => {
-    setIsLoading(true)
+  const cargar = useCallback((mostrarCarga = false) => {
+    if (mostrarCarga) setIsLoading(true)
     setError(null)
     getNotificaciones(LEIDA_PARAM[filtro])
       .then(setNotificaciones)
@@ -27,11 +27,11 @@ export function useNotificaciones() {
   }, [filtro])
 
   useEffect(() => {
-    cargar()
+    cargar(true)
   }, [cargar])
 
   useEffect(() => {
-    const intervalo = setInterval(cargar, POLL_INTERVAL_MS)
+    const intervalo = setInterval(() => cargar(false), POLL_INTERVAL_MS)
     return () => clearInterval(intervalo)
   }, [cargar])
 

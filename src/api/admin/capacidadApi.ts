@@ -11,7 +11,9 @@ export async function postCalcular(playaId: number): Promise<{ estimacion_id: nu
   return data
 }
 
-export async function fetchHistorial(playaId: number, limit = 30): Promise<HistorialResponseRaw> {
-  const { data } = await httpClient.get<HistorialResponseRaw>(`/capacidad/historial/${playaId}`, { params: { limit } })
+export async function fetchHistorial(playaId: number, page = 1, limit = 10): Promise<HistorialResponseRaw> {
+  const { data } = await httpClient.get<HistorialResponseRaw>(`/capacidad/historial/${playaId}`, {
+    params: { page, limit },
+  })
   return data
 }

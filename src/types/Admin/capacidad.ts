@@ -62,5 +62,7 @@ export interface HistorialItem {
 export interface HistorialResponseRaw {
   playa_id: number
   total: number
+  page: number
+  limit: number
   estimaciones: HistorialItemRaw[]
 }

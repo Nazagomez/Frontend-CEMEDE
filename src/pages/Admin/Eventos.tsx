@@ -1,12 +1,15 @@
 import { useState } from 'react'
 import { Plus } from 'lucide-react'
-import { useEventos } from '@/hooks/admin/useEventos'
+import { useEventos, type TabEventos } from '@/hooks/admin/useEventos'
 import { usePlayasList } from '@/hooks/usePlayasList'
 import { EventosTabs } from '@/components/Admin/eventos/EventosTabs'
 import { EventosList } from '@/components/Admin/eventos/EventosList'
 import { EventoDetalleModal } from '@/components/Admin/eventos/EventoDetalleModal'
 import { CrearEventoModal } from '@/components/Admin/eventos/CrearEventoModal'
+import { Paginacion } from '@/components/ui/Paginacion'
 import type { EventoAmbiental } from '@/types/admin/eventos'
+
+const EVENTOS_PAGE_SIZE = 8
 
 export function Eventos() {
   const { eventos, pendientesCount, isLoading, error, actionError, tab, setTab, aprobar, rechazar, cerrar, crear } =
@@ -15,6 +18,14 @@ export function Eventos() {
   const [mostrarCrear, setMostrarCrear] = useState(false)
   const [detalle, setDetalle] = useState<EventoAmbiental | null>(null)
   const [submitting, setSubmitting] = useState(false)
+  const [page, setPage] = useState(1)
+  const inicio = (page - 1) * EVENTOS_PAGE_SIZE
+  const eventosPagina = eventos.slice(inicio, inicio + EVENTOS_PAGE_SIZE)
+
+  function cambiarTab(siguiente: TabEventos) {
+    setPage(1)
+    setTab(siguiente)
+  }
 
   async function handleCrear(payload: Parameters<typeof crear>[0]) {
     setSubmitting(true)
@@ -61,13 +72,24 @@ export function Eventos() {
         </div>
       </div>
 
-      <EventosTabs tab={tab} onChange={setTab} />
+      <EventosTabs tab={tab} onChange={cambiarTab} />
 
       {isLoading && <p className="text-sm text-ink-500">Cargando eventos…</p>}
       {error && <p className="text-sm text-alert-600">{error}</p>}
       {actionError && <p className="text-sm text-alert-600">{actionError}</p>}
 
-      {!isLoading && !error && <EventosList eventos={eventos} onVerDetalle={setDetalle} />}
+      {!isLoading && !error && (
+        <>
+          <EventosList eventos={eventosPagina} onVerDetalle={setDetalle} />
+          <Paginacion
+            page={page}
+            total={eventos.length}
+            pageSize={EVENTOS_PAGE_SIZE}
+            onPageChange={setPage}
+            itemLabel="eventos"
+          />
+        </>
+      )}
 
       {mostrarCrear && (
         <CrearEventoModal

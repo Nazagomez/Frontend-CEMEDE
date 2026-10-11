@@ -47,9 +47,13 @@ export async function getEventosActivosDetalle(playaId: number): Promise<EventoA
   }))
 }
 
-export async function getHistorial(playaId: number): Promise<HistorialItem[]> {
-  const raw = await fetchHistorial(playaId)
-  return raw.estimaciones.map(mapHistorialItem)
+export async function getHistorial(
+  playaId: number,
+  page = 1,
+  limit = 10,
+): Promise<{ items: HistorialItem[]; total: number }> {
+  const raw = await fetchHistorial(playaId, page, limit)
+  return { items: raw.estimaciones.map(mapHistorialItem), total: raw.total }
 }
 
 export async function recalcularEstimacion(playaId: number): Promise<void> {

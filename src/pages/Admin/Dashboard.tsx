@@ -19,8 +19,10 @@ export function Dashboard() {
           <p className="text-sm text-ink-500">Rol: {user ? ROL_LABEL[user.rol] : ''}</p>
         </div>
         <button
+          type="button"
           onClick={refrescar}
-          className="flex items-center gap-1.5 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-ink-700 hover:bg-gray-50"
+          disabled={isLoading}
+          className="flex items-center gap-1.5 rounded-md border border-gray-300 px-3 py-2 text-sm font-medium text-ink-700 hover:bg-gray-50 disabled:opacity-50"
         >
           <RefreshCw className="h-4 w-4" aria-hidden />
           Actualizar

@@ -4,6 +4,7 @@ import { OcupacionCard } from '@/components/Admin/visitantes/OcupacionCard'
 import { RegistrarEntradaForm } from '@/components/Admin/visitantes/RegistrarEntradaForm'
 import { HistorialFiltros } from '@/components/Admin/visitantes/HistorialFiltros'
 import { HistorialTable } from '@/components/Admin/visitantes/HistorialTable'
+import { Paginacion } from '@/components/ui/Paginacion'
 
 export function Visitantes() {
   const {
@@ -27,8 +28,6 @@ export function Visitantes() {
     registrarEntradaVisitante,
     registrarSalidaVisitante,
   } = useVisitantes()
-
-  const totalPages = Math.max(1, Math.ceil(total / limit))
 
   return (
     <div className="flex flex-col gap-6">
@@ -64,26 +63,7 @@ export function Visitantes() {
         {!cargandoHistorial && !error && (
           <>
             <HistorialTable registros={registros} onRegistrarSalida={registrarSalidaVisitante} />
-            <div className="flex items-center justify-between text-sm text-ink-500">
-              <span>{total} registros en total</span>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setPage(Math.max(1, page - 1))}
-                  disabled={page <= 1}
-                  className="rounded-md border border-gray-300 px-3 py-1.5 font-medium text-ink-700 hover:bg-gray-50 disabled:opacity-50"
-                >
-                  Anterior
-                </button>
-                <span>Página {page} de {totalPages}</span>
-                <button
-                  onClick={() => setPage(Math.min(totalPages, page + 1))}
-                  disabled={page >= totalPages}
-                  className="rounded-md border border-gray-300 px-3 py-1.5 font-medium text-ink-700 hover:bg-gray-50 disabled:opacity-50"
-                >
-                  Siguiente
-                </button>
-              </div>
-            </div>
+            <Paginacion page={page} total={total} pageSize={limit} onPageChange={setPage} />
           </>
         )}
       </div>

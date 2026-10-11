@@ -20,7 +20,8 @@ export function useDashboard(): UseDashboardResult {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  const cargar = useCallback(() => {
+  const cargar = useCallback((mostrarCarga = false) => {
+    if (mostrarCarga) setIsLoading(true)
     setError(null)
     Promise.all([getDashboardGeneral(), getEventosRecientes()])
       .then(([dashboard, eventos]) => {
@@ -40,5 +41,5 @@ export function useDashboard(): UseDashboardResult {
     return () => clearInterval(intervalo)
   }, [cargar])
 
-  return { data, eventosRecientes, isLoading, error, refrescar: cargar }
+  return { data, eventosRecientes, isLoading, error, refrescar: () => cargar(true) }
 }

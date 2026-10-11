@@ -1,11 +1,23 @@
+import { useState } from 'react'
 import { Bell, CheckCheck } from 'lucide-react'
 import { useNotificaciones } from '@/hooks/admin/useNotificaciones'
 import { NotificacionesTabs } from '@/components/Admin/notificaciones/NotificacionesTabs'
 import { NotificacionesList } from '@/components/Admin/notificaciones/NotificacionesList'
+import { Paginacion } from '@/components/ui/Paginacion'
+
+const NOTIFICACIONES_PAGE_SIZE = 8
 
 export function Notificaciones() {
   const { notificaciones, filtro, setFiltro, isLoading, error, actionError, marcarLeida, marcarTodas, noLeidasCount } =
     useNotificaciones()
+  const [page, setPage] = useState(1)
+  const inicio = (page - 1) * NOTIFICACIONES_PAGE_SIZE
+  const notificacionesPagina = notificaciones.slice(inicio, inicio + NOTIFICACIONES_PAGE_SIZE)
+
+  function cambiarFiltro(siguiente: typeof filtro) {
+    setPage(1)
+    setFiltro(siguiente)
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -28,13 +40,24 @@ export function Notificaciones() {
         )}
       </div>
 
-      <NotificacionesTabs filtro={filtro} onChange={setFiltro} />
+      <NotificacionesTabs filtro={filtro} onChange={cambiarFiltro} />
 
       {isLoading && <p className="text-sm text-ink-500">Cargando notificaciones…</p>}
       {error && <p className="text-sm text-alert-600">{error}</p>}
       {actionError && <p className="text-sm text-alert-600">{actionError}</p>}
 
-      {!isLoading && !error && <NotificacionesList notificaciones={notificaciones} onMarcarLeida={marcarLeida} />}
+      {!isLoading && !error && (
+        <>
+          <NotificacionesList notificaciones={notificacionesPagina} onMarcarLeida={marcarLeida} />
+          <Paginacion
+            page={page}
+            total={notificaciones.length}
+            pageSize={NOTIFICACIONES_PAGE_SIZE}
+            onPageChange={setPage}
+            itemLabel="notificaciones"
+          />
+        </>
+      )}
     </div>
   )
 }

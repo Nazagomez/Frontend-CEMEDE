@@ -7,6 +7,7 @@ import { CapacidadPlayaSelector } from '@/components/Admin/capacidad/CapacidadPl
 import { EstimacionCard } from '@/components/Admin/capacidad/EstimacionCard'
 import { EventosActivosDetalle } from '@/components/Admin/capacidad/EventosActivosDetalle'
 import { HistorialTable } from '@/components/Admin/capacidad/HistorialTable'
+import { Paginacion } from '@/components/ui/Paginacion'
 
 export function Capacidad() {
   const { user } = useAuth()
@@ -15,10 +16,14 @@ export function Capacidad() {
   const {
     playas,
     playaId,
-    setPlayaId,
+    cambiarPlaya,
     estimacion,
     eventosDetalle,
     historial,
+    historialTotal,
+    page,
+    pageSize,
+    setPage,
     isLoading,
     error,
     recalculando,
@@ -56,7 +61,7 @@ export function Capacidad() {
         </p>
       )}
 
-      <CapacidadPlayaSelector playas={playas} playaId={playaId} onChange={setPlayaId} />
+      <CapacidadPlayaSelector playas={playas} playaId={playaId} onChange={cambiarPlaya} />
 
       {isLoading && <p className="text-sm text-ink-500">Calculando…</p>}
       {error && <p className="text-sm text-alert-600">{error}</p>}
@@ -69,6 +74,7 @@ export function Capacidad() {
           <MlHistoricoPanel playaId={playaId} canManage={puedeMl} onDataChanged={cargar} />
           <EventosActivosDetalle eventos={eventosDetalle} />
           <HistorialTable historial={historial} />
+          <Paginacion page={page} total={historialTotal} pageSize={pageSize} onPageChange={setPage} itemLabel="estimaciones" />
         </>
       )}
     </div>

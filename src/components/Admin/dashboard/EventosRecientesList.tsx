@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { EventoAmbiental } from '@/types/admin/eventos'
 import { TIPO_EVENTO_LABEL } from '@/types/admin/eventos'
 
@@ -13,9 +14,10 @@ export function EventosRecientesList({ eventos }: EventosRecientesListProps) {
 
       <div className="mt-4 flex flex-col gap-2">
         {eventos.map((evento) => (
-          <div
+          <Link
             key={evento.id}
-            className={`rounded-md border-l-4 px-4 py-2.5 text-sm ${
+            to="/admin/eventos"
+            className={`block rounded-md border-l-4 px-4 py-2.5 text-sm transition-colors hover:bg-gray-100 ${
               evento.activo ? 'border-alert-600 bg-alert-600/5' : 'border-navy-700 bg-gray-50'
             }`}
           >
@@ -23,7 +25,7 @@ export function EventosRecientesList({ eventos }: EventosRecientesListProps) {
             <p className="text-xs text-ink-500">
               {evento.playaNombre ?? 'Sin playa'} · {new Date(evento.fechaInicio).toLocaleDateString('es-CR')}
             </p>
-          </div>
+          </Link>
         ))}
         {eventos.length === 0 && <p className="text-sm text-ink-500">No hay eventos registrados todavía.</p>}
       </div>
