@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { usePlayasList } from '@/hooks/usePlayasList'
 import { getOcupacionActual, getHistorial, crearEntrada, cerrarSalida } from '@/services/admin/visitantesService'
 import type { Ocupacion, RegistroVisitante, HistorialFiltro, EntradaPayload } from '@/types/Admin/visitantes'
@@ -20,6 +20,7 @@ export function useVisitantes() {
 
   const [submitting, setSubmitting] = useState(false)
   const [actionError, setActionError] = useState<string | null>(null)
+  const historialRequestId = useRef(0)
 
   useEffect(() => {
     if (playaId === null && playas.length > 0) {
@@ -37,10 +38,13 @@ export function useVisitantes() {
   }, [playaId])
 
   const cargarHistorial = useCallback(() => {
+    if (playaId === null) return
+    const requestId = historialRequestId.current + 1
+    historialRequestId.current = requestId
     setCargandoHistorial(true)
     setError(null)
     const filtro: HistorialFiltro = {
-      playaId: playaId ?? undefined,
+      playaId,
       fechaInicio: filtroFechaInicio || undefined,
       fechaFin: filtroFechaFin || undefined,
       page,
@@ -48,11 +52,18 @@ export function useVisitantes() {
     }
     getHistorial(filtro)
       .then((resp) => {
+        if (requestId !== historialRequestId.current) return
         setRegistros(resp.registros)
         setTotal(resp.total)
       })
-      .catch(() => setError('No se pudo cargar el historial de visitantes.'))
-      .finally(() => setCargandoHistorial(false))
+      .catch(() => {
+        if (requestId !== historialRequestId.current) return
+        setError('No se pudo cargar el historial de visitantes.')
+      })
+      .finally(() => {
+        if (requestId !== historialRequestId.current) return
+        setCargandoHistorial(false)
+      })
   }, [playaId, filtroFechaInicio, filtroFechaFin, page])
 
   useEffect(() => {

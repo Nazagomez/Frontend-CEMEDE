@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 
 interface HistorialFiltrosProps {
   fechaInicio: string
@@ -9,6 +9,11 @@ interface HistorialFiltrosProps {
 export function HistorialFiltros({ fechaInicio, fechaFin, onAplicar }: HistorialFiltrosProps) {
   const [inicio, setInicio] = useState(fechaInicio)
   const [fin, setFin] = useState(fechaFin)
+
+  useEffect(() => {
+    setInicio(fechaInicio)
+    setFin(fechaFin)
+  }, [fechaInicio, fechaFin])
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()

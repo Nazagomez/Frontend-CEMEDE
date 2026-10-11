@@ -57,10 +57,15 @@ export function Visitantes() {
           <HistorialFiltros fechaInicio={filtroFechaInicio} fechaFin={filtroFechaFin} onAplicar={aplicarFiltrosFecha} />
         </div>
 
-        {cargandoHistorial && <p className="text-sm text-ink-500">Cargando historial…</p>}
+        {cargandoHistorial && registros.length === 0 && <p className="text-sm text-ink-500">Cargando historial…</p>}
         {error && <p className="text-sm text-alert-600">{error}</p>}
+        {(filtroFechaInicio || filtroFechaFin) && (
+          <p className="text-sm text-ink-500">
+            {`Filtrando entradas${filtroFechaInicio ? ` desde ${filtroFechaInicio}` : ''}${filtroFechaFin ? ` hasta ${filtroFechaFin}` : ''}.`}
+          </p>
+        )}
 
-        {!cargandoHistorial && !error && (
+        {!error && (registros.length > 0 || !cargandoHistorial) && (
           <>
             <HistorialTable registros={registros} onRegistrarSalida={registrarSalidaVisitante} />
             <Paginacion page={page} total={total} pageSize={limit} onPageChange={setPage} />
