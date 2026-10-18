@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import type { EventoAmbiental } from '@/types/admin/eventos'
-import { TIPO_EVENTO_LABEL } from '@/types/admin/eventos'
+import type { EventoAmbiental } from '@/types/Admin/eventos'
+import { TIPO_EVENTO_LABEL } from '@/types/Admin/eventos'
 
 interface EventosRecientesListProps {
   eventos: EventoAmbiental[]

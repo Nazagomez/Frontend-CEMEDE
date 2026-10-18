@@ -1,4 +1,4 @@
-import type { EventoAmbiental } from '@/types/admin/eventos'
+import type { EventoAmbiental } from '@/types/Admin/eventos'
 import { EventoCard } from '@/components/Admin/eventos/EventoCard'
 
 interface EventosListProps {

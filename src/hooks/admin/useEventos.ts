@@ -7,7 +7,7 @@ import {
   cerrarEventoActivo,
   registrarEvento,
 } from '@/services/admin/eventosService'
-import type { EventoAmbiental, EstadoEvento, CrearEventoPayload } from '@/types/admin/eventos'
+import type { EventoAmbiental, EstadoEvento, CrearEventoPayload } from '@/types/Admin/eventos'
 
 export type TabEventos = 'todos' | EstadoEvento
 

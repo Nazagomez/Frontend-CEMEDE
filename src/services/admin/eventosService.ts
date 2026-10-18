@@ -6,7 +6,7 @@ import {
   rechazarEvento,
   cerrarEvento,
 } from '@/api/admin/eventosApi'
-import type { EventoAmbiental, EventoAmbientalRaw, EventosFiltro, CrearEventoPayload } from '@/types/admin/eventos'
+import type { EventoAmbiental, EventoAmbientalRaw, EventosFiltro, CrearEventoPayload } from '@/types/Admin/eventos'
 
 function mapEvento(raw: EventoAmbientalRaw): EventoAmbiental {
   return {

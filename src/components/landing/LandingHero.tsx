@@ -11,7 +11,7 @@ export function LandingHero() {
           Cuidar la costa empieza por conocer su límite
         </h1>
         <p className="mt-5 max-w-md text-sm leading-relaxed text-white/90 sm:text-base">
-          SITEC estima cuánta gente puede recibir una playa hoy, para que la visita no comprometa el ecosistema ni la experiencia de quienes llegan.
+          SITEC estima la cantidad de visitantes que una playa puede recibir en el día, a fin de que la visita no comprometa el ecosistema ni la experiencia de quienes llegan.
         </p>
         <Link
           to="/visitante"

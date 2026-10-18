@@ -29,17 +29,19 @@ export function useEventosVisitante() {
       .finally(() => setIsLoading(false))
   }, [playaId])
 
-  async function reportar(payload: Omit<ReportarEventoPayload, 'playaId' | 'areaUtilM2'>) {
+  async function reportar(payload: Omit<ReportarEventoPayload, 'playaId' | 'areaUtilM2'>): Promise<boolean> {
     const playa = playas.find((p) => p.id === playaId)
-    if (!playa) return
+    if (!playa) return false
     setEnviando(true)
     setEnviado(false)
     setEnviarError(null)
     try {
       await reportarEventoAmbiental({ ...payload, playaId: playa.id, areaUtilM2: playa.areaUtilM2 })
       setEnviado(true)
+      return true
     } catch {
       setEnviarError('No se pudo enviar el reporte. Intentá de nuevo.')
+      return false
     } finally {
       setEnviando(false)
     }

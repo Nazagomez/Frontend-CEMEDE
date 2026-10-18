@@ -6,7 +6,7 @@ import { usePlayas } from '@/hooks/admin/usePlayas'
 import { PlayaCard } from '@/components/Admin/playas/PlayaCard'
 import { CrearPlayaModal } from '@/components/Admin/playas/CrearPlayaModal'
 import { EditarConfiguracionModal } from '@/components/Admin/playas/EditarConfiguracionModal'
-import type { PlayaConConfiguracion } from '@/types/admin/playas'
+import type { PlayaConConfiguracion } from '@/types/Admin/playas'
 
 export function Playas() {
   const { user } = useAuth()

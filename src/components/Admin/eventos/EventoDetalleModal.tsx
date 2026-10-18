@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import { TIPO_EVENTO_LABEL, type EventoAmbiental } from '@/types/admin/eventos'
+import { TIPO_EVENTO_LABEL, type EventoAmbiental } from '@/types/Admin/eventos'
 import { EventoEstadoBadge } from '@/components/Admin/eventos/EventoEstadoBadge'
 
 interface EventoDetalleModalProps {

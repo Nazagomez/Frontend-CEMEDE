@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
-import { LayoutDashboard, Users, FileWarning, TrendingUp, MapPin, LogOut, Menu, X, ShieldCheck } from 'lucide-react'
+import { LayoutDashboard, Users, FileWarning, TrendingUp, MapPin, Bell, LogOut, Menu, X, ShieldCheck } from 'lucide-react'
 import { InstitutionalLogos } from '@/components/brand/InstitutionalLogos'
 import { useAuth } from '@/hooks/useAuth'
 import { ROL_LABEL, tienePermiso } from '@/services/auth/permissions'
@@ -12,6 +12,7 @@ const navItemsBase = [
   { to: '/admin/eventos', label: 'Eventos ambientales', icon: FileWarning },
   { to: '/admin/capacidad', label: 'Capacidad de Carga', icon: TrendingUp },
   { to: '/admin/playas', label: 'Playas monitoreadas', icon: MapPin },
+  { to: '/admin/notificaciones', label: 'Notificaciones', icon: Bell },
 ]
 
 const navItemClass = ({ isActive }: { isActive: boolean }) =>

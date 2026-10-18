@@ -7,7 +7,7 @@ import { EventosList } from '@/components/Admin/eventos/EventosList'
 import { EventoDetalleModal } from '@/components/Admin/eventos/EventoDetalleModal'
 import { CrearEventoModal } from '@/components/Admin/eventos/CrearEventoModal'
 import { Paginacion } from '@/components/ui/Paginacion'
-import type { EventoAmbiental } from '@/types/admin/eventos'
+import type { EventoAmbiental } from '@/types/Admin/eventos'
 
 const EVENTOS_PAGE_SIZE = 8
 

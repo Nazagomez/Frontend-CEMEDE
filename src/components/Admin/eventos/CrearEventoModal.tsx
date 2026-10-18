@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { X } from 'lucide-react'
-import { TIPO_EVENTO_LABEL, type TipoEvento, type CrearEventoPayload } from '@/types/admin/eventos'
+import { TIPO_EVENTO_LABEL, type TipoEvento, type CrearEventoPayload } from '@/types/Admin/eventos'
 import type { Playa } from '@/types/playas'
 
 interface CrearEventoModalProps {
@@ -39,7 +39,12 @@ export function CrearEventoModal({ playas, onClose, onSubmit, submitting, error 
       parteAfectada: 0,
       totalidadAnalizada: playaSeleccionada?.areaUtilM2 ?? 1,
     })
-    if (ok) onClose()
+    if (ok) {
+      setTipo('otro')
+      setDescripcion('')
+      setPlayaId(playas[0]?.id ?? null)
+      onClose()
+    }
   }
 
   return (

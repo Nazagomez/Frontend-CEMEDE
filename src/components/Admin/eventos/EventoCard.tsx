@@ -1,5 +1,5 @@
 import { AlertTriangle } from 'lucide-react'
-import type { EventoAmbiental, EstadoEvento } from '@/types/admin/eventos'
+import type { EventoAmbiental, EstadoEvento } from '@/types/Admin/eventos'
 import { EventoEstadoBadge } from '@/components/Admin/eventos/EventoEstadoBadge'
 
 interface EventoCardProps {

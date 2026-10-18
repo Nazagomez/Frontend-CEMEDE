@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { UserPlus } from 'lucide-react'
 import type { Playa } from '@/types/playas'
+import { quitarCero } from '@/utils/quitar-cero'
 
 interface RegistrarEntradaFormProps {
   playas: Playa[]
@@ -22,21 +23,23 @@ const DURACION_OPCIONES = [
 ]
 
 export function RegistrarEntradaForm({ playas, playaId, onChangePlaya, submitting, error, onSubmit }: RegistrarEntradaFormProps) {
-  const [cantidad, setCantidad] = useState(1)
+  const [cantidad, setCantidad] = useState('')
   const [duracion, setDuracion] = useState('')
   const [observaciones, setObservaciones] = useState('')
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (playaId === null) return
+    const cantidadPersonas = Number(cantidad)
+    if (!cantidad.trim() || !Number.isFinite(cantidadPersonas) || cantidadPersonas < 1) return
     const ok = await onSubmit({
       playaId,
-      cantidadPersonas: cantidad,
+      cantidadPersonas,
       duracionEstimadaHoras: duracion ? Number(duracion) : undefined,
       observaciones: observaciones || undefined,
     })
     if (ok) {
-      setCantidad(1)
+      setCantidad('')
       setDuracion('')
       setObservaciones('')
     }
@@ -70,8 +73,11 @@ export function RegistrarEntradaForm({ playas, playaId, onChangePlaya, submittin
           <input
             type="number"
             min={1}
+            required
             value={cantidad}
-            onChange={(e) => setCantidad(Number(e.target.value))}
+            onFocus={() => setCantidad((valor) => quitarCero(valor))}
+            onClick={() => setCantidad((valor) => quitarCero(valor))}
+            onChange={(e) => setCantidad(e.target.value)}
             className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 text-sm outline-none focus:border-navy-700"
           />
         </div>

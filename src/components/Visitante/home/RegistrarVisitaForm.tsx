@@ -2,12 +2,13 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { MapPin, Users } from 'lucide-react'
 import type { Playa } from '@/types/playas'
 import type { RegistrarVisitaPayload } from '@/types/Visitante/home'
+import { quitarCero } from '@/utils/quitar-cero'
 
 interface RegistrarVisitaFormProps {
   playas: Playa[]
   enviando: boolean
   enviado: boolean
-  onSubmit: (payload: RegistrarVisitaPayload) => void
+  onSubmit: (payload: RegistrarVisitaPayload) => void | Promise<void>
   onPlayaChange: (playaId: number) => void
 }
 
@@ -23,20 +24,24 @@ const DURACION_OPCIONES = [
 
 export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit, onPlayaChange }: RegistrarVisitaFormProps) {
   const [playaId, setPlayaId] = useState<number | null>(playas[0]?.id ?? null)
-  const [personas, setPersonas] = useState(1)
+  const [personas, setPersonas] = useState('')
   const [duracion, setDuracion] = useState('')
   useEffect(() => {
     if (playaId !== null) onPlayaChange(playaId)
   }, [playaId, onPlayaChange])
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
     if (playaId === null) return
-    onSubmit({
+    const cantidadPersonas = Number(personas)
+    if (!personas.trim() || !Number.isFinite(cantidadPersonas) || cantidadPersonas < 1) return
+    await onSubmit({
       playaId,
-      cantidadPersonas: personas,
+      cantidadPersonas,
       duracionEstimadaHoras: duracion ? Number(duracion) : undefined,
     })
+    setPersonas('')
+    setDuracion('')
   }
 
   return (
@@ -74,8 +79,11 @@ export function RegistrarVisitaForm({ playas, enviando, enviado, onSubmit, onPla
               id="personas"
               type="number"
               min={1}
+              required
               value={personas}
-              onChange={(e) => setPersonas(Number(e.target.value))}
+              onFocus={() => setPersonas((valor) => quitarCero(valor))}
+              onClick={() => setPersonas((valor) => quitarCero(valor))}
+              onChange={(e) => setPersonas(e.target.value)}
               className="scheme-dark w-full rounded-lg border border-white/30 bg-[#062833]/45 py-2 pl-9 pr-3 text-sm text-white outline-none focus:border-white"
             />
           </div>

@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import { X } from 'lucide-react'
-import type { CrearPlayaPayload } from '@/types/admin/playas'
+import type { CrearPlayaPayload } from '@/types/Admin/playas'
+import { quitarCero } from '@/utils/quitar-cero'
 
 interface CrearPlayaModalProps {
   onClose: () => void
@@ -56,7 +57,7 @@ export function CrearPlayaModal({ onClose, onSubmit, submitting, error }: CrearP
           </div>
           <div>
             <label className={labelClass}>Área útil (m²)</label>
-            <input required type="number" min={0} step="0.01" value={areaUtilM2} onChange={(e) => setAreaUtilM2(e.target.value)} className={inputClass} />
+            <input required type="number" min={0} step="0.01" value={areaUtilM2} onFocus={() => setAreaUtilM2((valor) => quitarCero(valor))} onClick={() => setAreaUtilM2((valor) => quitarCero(valor))} onChange={(e) => setAreaUtilM2(e.target.value)} className={inputClass} />
           </div>
 
           <p className="mt-2 text-xs font-medium text-ink-500">Configuración inicial de capacidad</p>
@@ -64,19 +65,19 @@ export function CrearPlayaModal({ onClose, onSubmit, submitting, error }: CrearP
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className={labelClass}>Área/visitante (m²)</label>
-              <input required type="number" min={0} step="0.01" value={areaPorVisitanteM2} onChange={(e) => setAreaPorVisitanteM2(e.target.value)} className={inputClass} />
+              <input required type="number" min={0} step="0.01" value={areaPorVisitanteM2} onFocus={() => setAreaPorVisitanteM2((valor) => quitarCero(valor))} onClick={() => setAreaPorVisitanteM2((valor) => quitarCero(valor))} onChange={(e) => setAreaPorVisitanteM2(e.target.value)} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Período (horas)</label>
-              <input required type="number" min={1} value={periodoHoras} onChange={(e) => setPeriodoHoras(e.target.value)} className={inputClass} />
+              <input required type="number" min={1} value={periodoHoras} onFocus={() => setPeriodoHoras((valor) => quitarCero(valor))} onClick={() => setPeriodoHoras((valor) => quitarCero(valor))} onChange={(e) => setPeriodoHoras(e.target.value)} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Permanencia (horas)</label>
-              <input required type="number" min={0} step="0.1" value={tiempoPermanenciaHoras} onChange={(e) => setTiempoPermanenciaHoras(e.target.value)} className={inputClass} />
+              <input required type="number" min={0} step="0.1" value={tiempoPermanenciaHoras} onFocus={() => setTiempoPermanenciaHoras((valor) => quitarCero(valor))} onClick={() => setTiempoPermanenciaHoras((valor) => quitarCero(valor))} onChange={(e) => setTiempoPermanenciaHoras(e.target.value)} className={inputClass} />
             </div>
             <div>
               <label className={labelClass}>Capacidad manejo (0-1)</label>
-              <input required type="number" min={0} max={1} step="0.01" value={capacidadManejo} onChange={(e) => setCapacidadManejo(e.target.value)} className={inputClass} />
+              <input required type="number" min={0} max={1} step="0.01" value={capacidadManejo} onFocus={() => setCapacidadManejo((valor) => quitarCero(valor))} onClick={() => setCapacidadManejo((valor) => quitarCero(valor))} onChange={(e) => setCapacidadManejo(e.target.value)} className={inputClass} />
             </div>
           </div>
 

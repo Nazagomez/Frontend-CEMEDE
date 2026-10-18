@@ -13,7 +13,7 @@ import type {
   PlayaConConfiguracion,
   CrearPlayaPayload,
   ActualizarConfiguracionPayload,
-} from '@/types/admin/playas'
+} from '@/types/Admin/playas'
 
 function mapConfiguracion(raw: ConfiguracionCcfRaw): ConfiguracionCcf {
   return {

@@ -1,5 +1,5 @@
 import { AlignJustify, Pencil, Trash2 } from 'lucide-react'
-import type { PlayaConConfiguracion } from '@/types/admin/playas'
+import type { PlayaConConfiguracion } from '@/types/Admin/playas'
 
 interface PlayaCardProps {
   playa: PlayaConConfiguracion

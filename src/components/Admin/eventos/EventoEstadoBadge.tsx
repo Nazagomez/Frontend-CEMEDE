@@ -1,4 +1,4 @@
-import { ESTADO_EVENTO_LABEL, type EstadoEvento } from '@/types/admin/eventos'
+import { ESTADO_EVENTO_LABEL, type EstadoEvento } from '@/types/Admin/eventos'
 
 const estadoStyles: Record<EstadoEvento, string> = {
   pendiente: 'bg-alert-600/10 text-alert-600',

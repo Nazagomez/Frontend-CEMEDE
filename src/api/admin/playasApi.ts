@@ -4,7 +4,7 @@ import type {
   ConfiguracionCcfRaw,
   CrearPlayaPayload,
   ActualizarConfiguracionPayload,
-} from '@/types/admin/playas'
+} from '@/types/Admin/playas'
 
 export async function fetchConfiguracion(playaId: number): Promise<ConfiguracionCcfRaw> {
   const { data } = await httpClient.get<ConfiguracionCcfRaw>(`/playas/${playaId}/configuracion`)

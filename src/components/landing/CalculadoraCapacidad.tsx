@@ -3,6 +3,21 @@ import { Link } from 'react-router-dom'
 import { Calculator, ArrowRight } from 'lucide-react'
 import { calcularCapacidad } from '@/services/calculoCapacidadService'
 
+const OPCIONES_MANEJO = [
+  { valor: 25, etiqueta: '25 % · Preparación baja' },
+  { valor: 50, etiqueta: '50 % · Preparación media' },
+  { valor: 75, etiqueta: '75 % · Preparación alta' },
+  { valor: 100, etiqueta: '100 % · Preparación completa' },
+] as const
+
+const OPCIONES_AMBIENTE = [
+  { valor: 0, etiqueta: 'Sin reducción' },
+  { valor: 10, etiqueta: 'Leve · reduce 10 %' },
+  { valor: 25, etiqueta: 'Moderada · reduce 25 %' },
+  { valor: 50, etiqueta: 'Alta · reduce 50 %' },
+  { valor: 80, etiqueta: 'Severa · reduce 80 %' },
+] as const
+
 export function CalculadoraCapacidad() {
   const [areaUtil, setAreaUtil] = useState(45000)
   const [areaPorVisitante, setAreaPorVisitante] = useState(20)
@@ -52,37 +67,22 @@ export function CalculadoraCapacidad() {
             <Campo label="Horas de apertura al día" valor={periodoHoras} unidad="horas" min={1} max={24} step={1} onChange={setPeriodoHoras} />
             <Campo label="Permanencia promedio" valor={permanencia} unidad="horas" min={0.5} max={12} step={0.5} onChange={setPermanencia} />
 
-            <div>
-              <div className="flex items-center justify-between text-sm">
-                <label className="font-medium text-white">Capacidad de manejo</label>
-                <span className="font-medium">{capacidadManejo}%</span>
-              </div>
-              <input
-                type="range"
-                min={10}
-                max={100}
-                value={capacidadManejo}
-                onChange={(e) => setCapacidadManejo(Number(e.target.value))}
-                className="mt-2 w-full accent-white/80"
-              />
-              <p className="mt-1 text-xs text-white">Qué tan preparado está el sitio: personal, señalización e infraestructura.</p>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between text-sm">
-                <label className="font-medium text-white">Condición ambiental hoy</label>
-                <span className="font-medium">-{reduccionAmbiental}%</span>
-              </div>
-              <input
-                type="range"
-                min={0}
-                max={80}
-                value={reduccionAmbiental}
-                onChange={(e) => setReduccionAmbiental(Number(e.target.value))}
-                className="mt-2 w-full accent-white/80"
-              />
-              <p className="mt-1 text-xs text-white">Simulá una marea alta, marea roja u otro evento que reduzca el área disponible.</p>
-            </div>
+            <Selector
+              id="capacidad-manejo"
+              label="Capacidad de manejo"
+              valor={capacidadManejo}
+              ayuda="Qué tan preparado está el sitio: personal, señalización e infraestructura."
+              opciones={OPCIONES_MANEJO}
+              onChange={setCapacidadManejo}
+            />
+            <Selector
+              id="condicion-ambiental"
+              label="Condición ambiental hoy"
+              valor={reduccionAmbiental}
+              ayuda="Simulá una marea alta, marea roja u otro evento que reduzca el área disponible."
+              opciones={OPCIONES_AMBIENTE}
+              onChange={setReduccionAmbiental}
+            />
           </div>
 
           <div className="flex flex-col justify-center border-t border-white/10 p-8 lg:border-l lg:border-t-0">
@@ -116,6 +116,39 @@ export function CalculadoraCapacidad() {
         </div>
       </div>
     </section>
+  )
+}
+
+function Selector({
+  id,
+  label,
+  valor,
+  ayuda,
+  opciones,
+  onChange,
+}: {
+  id: string
+  label: string
+  valor: number
+  ayuda: string
+  opciones: readonly { valor: number; etiqueta: string }[]
+  onChange: (valor: number) => void
+}) {
+  return (
+    <div>
+      <label htmlFor={id} className="text-sm font-medium text-white">{label}</label>
+      <select
+        id={id}
+        value={valor}
+        onChange={(evento) => onChange(Number(evento.target.value))}
+        className="scheme-dark mt-1.5 w-full rounded-lg border border-white/30 bg-[#062833]/45 px-3 py-2 text-sm text-white outline-none focus:border-white"
+      >
+        {opciones.map((opcion) => (
+          <option key={opcion.valor} value={opcion.valor}>{opcion.etiqueta}</option>
+        ))}
+      </select>
+      <p className="mt-1 text-xs text-white">{ayuda}</p>
+    </div>
   )
 }
 

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getPlayasDisponibles, getOcupacionActual, registrarVisita } from '@/services/visitante/homeService'
 import type { Playa } from '@/types/playas'
-import type { OcupacionPlaya, RegistrarVisitaPayload } from '@/types/visitante/home'
+import type { OcupacionPlaya, RegistrarVisitaPayload } from '@/types/Visitante/home'
 
 export function useHomeVisitante() {
   const [playas, setPlayas] = useState<Playa[]>([])

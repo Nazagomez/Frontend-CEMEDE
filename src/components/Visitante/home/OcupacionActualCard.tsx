@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { MapPin } from 'lucide-react'
-import type { OcupacionPlaya, NivelOcupacion } from '@/types/visitante/home'
+import type { OcupacionPlaya, NivelOcupacion } from '@/types/Visitante/home'
 
 interface OcupacionActualCardProps {
   ocupacion: OcupacionPlaya[]

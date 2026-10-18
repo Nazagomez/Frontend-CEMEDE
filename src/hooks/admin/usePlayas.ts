@@ -9,7 +9,7 @@ import type {
   PlayaConConfiguracion,
   CrearPlayaPayload,
   ActualizarConfiguracionPayload,
-} from '@/types/admin/playas'
+} from '@/types/Admin/playas'
 
 export function usePlayas() {
   const [playas, setPlayas] = useState<PlayaConConfiguracion[]>([])

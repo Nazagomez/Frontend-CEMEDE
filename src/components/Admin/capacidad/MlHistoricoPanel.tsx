@@ -75,9 +75,6 @@ export function MlHistoricoPanel({ playaId, canManage, onDataChanged }: MlHistor
         <Brain className="h-4 w-4" aria-hidden />
         <h2 className="font-semibold">Machine Learning e histórico</h2>
       </div>
-      <p className="mt-1 text-sm text-ink-500">
-        DecisionTreeRegressor complementa la fórmula CCR cuando hay datos suficientes (MAE / RMSE en prueba).
-      </p>
 
       {loading && <p className="mt-3 text-sm text-ink-500">Procesando…</p>}
       {error && <p className="mt-3 text-sm text-alert-600">{error}</p>}

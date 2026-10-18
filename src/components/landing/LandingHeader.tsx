@@ -3,7 +3,7 @@ import { LogIn } from 'lucide-react'
 import { InstitutionalLogos } from '@/components/brand/InstitutionalLogos'
 
 const navLinks = [
-  { id: 'proyecto', label: 'El proyecto' },
+  { id: 'proyecto', label: 'Acerca de' },
   { id: 'playas', label: 'Playas' },
   { id: 'calculadora', label: 'Calculadora' },
   { id: 'funcionalidades', label: 'Funcionalidades' },

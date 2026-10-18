@@ -7,16 +7,18 @@ interface ReportarEventoFormProps {
   enviando: boolean
   enviado: boolean
   error: string | null
-  onSubmit: (payload: { tipo: TipoEvento; descripcion?: string }) => void
+  onSubmit: (payload: { tipo: TipoEvento; descripcion?: string }) => void | Promise<boolean | void>
 }
 
 export function ReportarEventoForm({ disabled, enviando, enviado, error, onSubmit }: ReportarEventoFormProps) {
   const [tipo, setTipo] = useState<TipoEvento>('otro')
   const [descripcion, setDescripcion] = useState('')
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    onSubmit({ tipo, descripcion: descripcion || undefined })
+    const resultado = await onSubmit({ tipo, descripcion: descripcion || undefined })
+    if (resultado === false) return
+    setTipo('otro')
     setDescripcion('')
   }
 
